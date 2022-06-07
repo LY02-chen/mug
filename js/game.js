@@ -4,7 +4,7 @@ const Game = {
         scene.background = new THREE.Color(0x5b5b5b);
         
         const camera = new THREE.PerspectiveCamera(
-            45, 16 / 9, 0.1, 10000
+            45, 16 / 9, 0.1, 2000
         );
         camera.position.set(trackWidth / 2, -120, 100);
         camera.lookAt(trackWidth / 2, 120, 0);
