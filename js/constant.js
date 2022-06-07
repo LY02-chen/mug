@@ -5,4 +5,4 @@ const canvasWidth = 800,
       noteRadius = 2,
       keyCount = 8,
       trackWidth = noteWidth * keyCount,
-      speed = 10;
+      speed = 5;
