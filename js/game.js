@@ -12,7 +12,7 @@ const Game = {
         const renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(canvasWidth, canvasHeight);
         document.getElementById("game").appendChild(renderer.domElement);
-        
+
         function drawLine(width, height, x, y, z, color) {
             const line = new THREE.Mesh(
                 new THREE.PlaneGeometry(width, height), 
@@ -49,46 +49,27 @@ const Game = {
                 document.getElementById("canvas").remove(renderer.domElement);
             }
             
-            Game.down(notes);
+            // Game.down(notes);
     
             canvas.renderer.render(canvas.scene, canvas.camera);
         }
         loop();
     },
     note: function(scene, key, ticks) {
-        const shape = new THREE.Shape();
-        shape.arc(noteRadius, noteRadius - noteHeight / 2, 
-                  noteRadius, Math.PI, Math.PI * 1.5);
-        shape.arc(noteWidth - 2 * noteRadius, noteRadius, 
-                  noteRadius, Math.PI * 1.5, Math.PI * 2);
-        shape.arc(-noteRadius, noteHeight - 2 * noteRadius, 
-                  noteRadius, 0, Math.PI * 0.5);
-        shape.arc(-noteWidth + 2 * noteRadius, -noteRadius, 
-                  noteRadius, Math.PI * 0.5, Math.PI);
-        
-        const extrudeSettings = {
-            steps: 1,
-            depth: 1,
-            bevelEnabled: true,
-            bevelThickness: 1,
-            bevelSize: 2,
-            bevelOffset: -2,
-            bevelSegments: 4
-        };
+        const initY = ticks;
+        const width = noteWidth,
+              height = noteHeight,
+              radius = noteRadius;
 
-        const note = new THREE.Mesh(
-            new THREE.ExtrudeGeometry(shape, extrudeSettings),
-            new THREE.MeshMatcapMaterial({color: 0x4dffff})
+        const plane = new THREE.Mesh(
+            new THREE.PlaneGeometry(24, 12),
+            new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load("image/noteNormal.png")})
         );
 
-        const initY = ticks;
+        scene.add(plane);
 
-        note.position.set(noteWidth * key, ticks ,0);
-        scene.add(note);
-        
-    
         this.down = function() {
-            if(note.position.y > -10) {
+            if(note.position.y > -30) {
                 note.position.y -= speed;
             }
         }
@@ -103,8 +84,3 @@ const Game = {
         }
     }
 };
-    
-//     const notes = [];
-//     for (let i = 0; i < 8; i++) {
-//         notes.push(new note(i));
-//     }
