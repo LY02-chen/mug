@@ -49,7 +49,7 @@ const Game = {
                 document.getElementById("canvas").remove(renderer.domElement);
             }
             
-            // Game.down(notes);
+            Game.down(notes);
     
             canvas.renderer.render(canvas.scene, canvas.camera);
         }
@@ -63,20 +63,22 @@ const Game = {
 
         const plane = new THREE.Mesh(
             new THREE.PlaneGeometry(24, 12),
-            new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load("image/noteNormal.png")})
+            new THREE.MeshBasicMaterial({
+                map: new THREE.TextureLoader().load("image/noteNormal.png"),
+                transparent: true,
+                opacity: 1
+            })
         );
-
+        
+        plane.position.set(12 + key * 24,initY,0);
         scene.add(plane);
 
         this.down = function() {
-            if(note.position.y > -30) {
-                note.position.y -= speed;
+            if(plane.position.y > -30) {
+                plane.position.y -= speed;
             }
         }
     
-        this.plane = function() {
-            return note;
-        }
     },
     down: function(notes) {
         for(let i in notes) {
