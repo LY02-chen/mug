@@ -56,21 +56,53 @@ const Game = {
         loop();
     },
     note: function(scene, key, ticks) {
-        const initY = ticks;
-        const width = noteWidth,
+        const width = noteWidth * key.length,
               height = noteHeight,
-              radius = noteRadius;
+              initX = noteWidth * (key[0] + 0.5),
+              initY = ticks + 20;
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+
+        const texture = new THREE.CanvasTexture(canvas);
+
+        const imageLeft = new Image();
+        imageLeft.crossOrigin = "anonymous";
+        imageLeft.onload = function() {
+            ctx.drawImage(this, 0, 0, height, height);
+            texture.needsUpdate = true;
+        }
+        imageLeft.src = "image/noteNormal/left.png";
+
+        const imageRight = new Image();
+        imageRight.crossOrigin = "anonymous";
+        imageRight.onload = function() {
+            ctx.drawImage(this, width - height, 0, height, height);
+            texture.needsUpdate = true;
+        }
+        imageRight.src = "image/noteNormal/right.png";
+
+        const imageMid = new Image();
+        imageMid.crossOrigin = "anonymous";
+        imageMid.onload = function() {
+            for (let i = 0; i < 2 * (key.length - 1); i++) {
+                ctx.drawImage(this, height + i * height, 0, height, height);
+                texture.needsUpdate = true;
+            }
+        }
+        imageMid.src = "image/noteNormal/mid.png";
 
         const plane = new THREE.Mesh(
-            new THREE.PlaneGeometry(24, 12),
+            new THREE.PlaneGeometry(width, height),
             new THREE.MeshBasicMaterial({
-                map: new THREE.TextureLoader().load("image/noteNormal.png"),
-                transparent: true,
-                opacity: 1
+                map: texture,
+                transparent: true
             })
         );
         
-        plane.position.set(12 + key * 24,initY,0);
+        plane.position.set(initX, initY, 0);
         scene.add(plane);
 
         this.down = function() {
