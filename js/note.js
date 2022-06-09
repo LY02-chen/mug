@@ -15,6 +15,7 @@ const Note = {
                 transparent: true
             })
         ); 
+
         plane.position.set(initX, initY, 0);
         scene.add(plane);
 
@@ -103,8 +104,8 @@ const Note = {
             height * offset, height * offset
         );
         drawSide(
-            height * offset, radius * offset,
-            height * offset, height * (0.5 - offset)
+            height / 5, radius / 5,
+            height * offset, height * (0.8 - offset) / 2
         );
 
         return canvas;
@@ -116,6 +117,34 @@ const Note = {
             "topEnd": "#acd6ff",
             "mid": "#c4e1ff",
             "side": "#7d7dff",
-        }
+        },
+        "Up": {
+            "bottom": "#ffb6c1",
+            "topStart": "#de6890",
+            "topEnd": "#eca7be",
+            "mid": "#ffd9ec",
+            "side": "#d56767",
+        },
+        "Down": {
+            "bottom": "#acd6ff",
+            "topStart": "#0066cc",
+            "topEnd": "#66b3ff",
+            "mid": "#66b3ff",
+            "side": "#2e2eff",
+        },
+        "Long": {
+            "bottom": "#93ff93",
+            "topStart": "#00a600",
+            "topEnd": "#7afec6",
+            "mid": "#c1ffe4",
+            "side": "#01b468",
+        },
+        "Special": {
+            "bottom": "#ffffaa",
+            "topStart": "#ffd306",
+            "topEnd": "#f9f900",
+            "mid": "#ffed97",
+            "side": "#cfad17",
+        },
     }
 }

@@ -1,9 +1,9 @@
 const canvasWidth = 800,
       canvasHeight = 450,
       noteWidth = 24,
-      noteHeight = 16,
+      noteHeight = 12,
       noteRadius = 2,
-      noteOffset = 0.15,
+      noteOffset = 0.1,
       keyCount = 8,
       trackWidth = noteWidth * keyCount,
       speed = 5;

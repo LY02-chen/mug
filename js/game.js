@@ -6,8 +6,8 @@ const Game = {
         const camera = new THREE.PerspectiveCamera(
             45, 16 / 9, 0.1, 2000
         );
-        camera.position.set(trackWidth / 2, -120, 100);
-        camera.lookAt(trackWidth / 2, 120, 0);
+        camera.position.set(trackWidth / 2, -120, 120);
+        camera.lookAt(trackWidth / 2, 100, 0);
         
         const renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(canvasWidth, canvasHeight);
@@ -23,14 +23,14 @@ const Game = {
         }
 
         for (let i = 1; i < 8; i++) 
-            drawLine(0.5, 4000, i * noteWidth, 1900, -0.1, 0x9d9d9d);
-        drawLine(1, 4000, -0.5, 1900, -0.1, 0x9d9d9d);
-        drawLine(1, 4000, trackWidth - 0.5, 1900, -0.1, 0x9d9d9d);
+            drawLine(0.5, 4000, i * noteWidth, 1900, -0.2, 0x9d9d9d);
+        drawLine(1, 4000, -0.5, 1900, -0.2, 0x9d9d9d);
+        drawLine(1, 4000, trackWidth - 0.5, 1900, -0.2, 0x9d9d9d);
 
-        drawLine(trackWidth, 2, trackWidth / 2, noteHeight / 2 - 1, -0.09, 0xbe77ff);
-        drawLine(trackWidth, 2, trackWidth / 2, noteHeight / -2 + 1, -0.09, 0xbe77ff);
-        drawLine(2, noteHeight, -0.5, 0, -0.09, 0xbe77ff);
-        drawLine(2, noteHeight, trackWidth - 0.5, 0, -0.09, 0xbe77ff);
+        drawLine(trackWidth, 2, trackWidth / 2, noteHeight / 2 - 1, -0.1, 0xbe77ff);
+        drawLine(trackWidth, 2, trackWidth / 2, noteHeight / -2 + 1, -0.1, 0xbe77ff);
+        drawLine(2, noteHeight, -0.5, 0, -0.1, 0xbe77ff);
+        drawLine(2, noteHeight, trackWidth - 0.5, 0, -0.1, 0xbe77ff);
         
         return {
             scene: scene,
