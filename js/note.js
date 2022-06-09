@@ -6,8 +6,15 @@ const Note = {
               initX = noteWidth * (key[0]) + width / 2,
               initY = ticks;
 
-        const plane = Note.noteImage(type, width, height, radius);
-
+        const plane = new THREE.Mesh (
+            new THREE.PlaneGeometry(width, height),
+            new THREE.MeshBasicMaterial({
+                map: new THREE.CanvasTexture(
+                    Note.noteImage(type, width, height, radius)
+                ),
+                transparent: true
+            })
+        ); 
         plane.position.set(initX, initY, 0);
         scene.add(plane);
 
@@ -20,6 +27,8 @@ const Note = {
     noteImage: function(type, width, height, radius) {
         const canvas = document.createElement("canvas"),
               ctx = canvas.getContext("2d");
+
+        const offset = noteOffset;
 
         const scale = 20;
         canvas.width = width * scale;
@@ -73,43 +82,32 @@ const Note = {
 
             ctx.translate(dx, dy);
             drawSquare();
-            ctx.translate(width - height * 0.3, size);
-
+            ctx.translate(width - height * (offset * 2), size);
             ctx.rotate(Math.PI);
             drawSquare();
-
         }
 
         drawRect(
-            width, height * 0.85, 
+            width, height * (1 - offset), 
             radius, "bottom", 
-            0, height * 0.15
+            0, height * offset
         );
-
         drawRect(
-            width, height * 0.85, 
+            width, height * (1 - offset), 
             radius, "top", 
             0, 0
         );
-
         drawRect(
-            width - height * 0.3, height * 0.55, 
-            radius * 0.7, "mid", 
-            height * 0.15, height * 0.15
+            width - height * (offset * 2), height * (1 - offset * 3), 
+            radius * (1 - offset * 3), "mid", 
+            height * offset, height * offset
         );
-
         drawSide(
-            height * 0.25, radius * 0.25,
-            height * 0.15, height * 0.3
+            height * offset, radius * offset,
+            height * offset, height * (0.5 - offset)
         );
 
-        return new THREE.Mesh (
-            new THREE.PlaneGeometry(width, height),
-            new THREE.MeshBasicMaterial({
-                map: new THREE.CanvasTexture(canvas),
-                transparent: true
-            })
-        ); 
+        return canvas;
     },
     color: {
         "Normal": {

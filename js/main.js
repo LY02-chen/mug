@@ -8,7 +8,7 @@ const notes = Array.from(
         const length = rand(8) + 1;
         const left = rand(9 - length);
         const arr = Array.from({length: length}, (x, index) => left + index);
-        return new Note.Note(gameCanvas.scene, arr, index * 20, "Normal");
+        return new Note.Note(gameCanvas.scene, arr, index * 30, "Normal");
     }
 );
 Game.gameLoop(gameCanvas, notes);
