@@ -24,7 +24,7 @@ const Note = {
         group.add(noteGeometry);
 
         this.down = function() {
-            if (noteGeometry.position.y > -30) {
+            if (noteGeometry.position.y > -40) {
                 noteGeometry.position.y -= speed;
             }
         }
@@ -171,6 +171,7 @@ const Note = {
     read: function(speed, song, difficult) {
         const file = `musicalScore/${song}/${difficult}.ms`;
     
+        console.log("a");
         let text = "";
 
         const xhr = new XMLHttpRequest();
