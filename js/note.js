@@ -23,6 +23,8 @@ const Note = {
             if(plane.position.y > -30) {
                 plane.position.y -= speed;
             }
+            else 
+                plane.position.y = 20100;
         }
     },
     noteImage: function(type, width, height, radius) {
