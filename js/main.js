@@ -4,11 +4,16 @@ const rand = (n) => Math.floor(Math.random() * n)
 
 const notes = Array.from(
     {length: 1000}, 
-    (x, index) => new Game.note(gameCanvas.scene, [rand(8)], index * 20)
-    // (x, index) => new Game.note(gameCanvas.scene, [index/8], Math.floor(index / 8))
+    (x, index) => {
+        const length = rand(8) + 1;
+        const left = rand(9 - length);
+        const arr = Array.from({length: length}, (x, index) => left + index);
+        return new Note.Note(gameCanvas.scene, arr, index * 20, "Normal");
+    }
 );
 Game.gameLoop(gameCanvas, notes);
 document.body.addEventListener("keydown", keyDown, false);
 
 function keyDown(event) {    
 }
+
