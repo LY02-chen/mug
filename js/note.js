@@ -178,7 +178,7 @@ const Note = {
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                text = xhr.responseText.split("\r\n");
+                text = xhr.responseText;
             }
         };
 
