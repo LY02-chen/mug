@@ -171,7 +171,6 @@ const Note = {
     read: function(speed, song, difficult) {
         const file = `musicalScore/${song}/${difficult}.ms`;
     
-        console.log("a");
         let text = "";
 
         const xhr = new XMLHttpRequest();
@@ -185,6 +184,7 @@ const Note = {
 
         xhr.send();
 
+        console.log(text);
         text = text.filter(x => x.length);
 
         const start = text.indexOf("[start]") + 1,
