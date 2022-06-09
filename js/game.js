@@ -13,13 +13,15 @@ const Game = {
         renderer.setSize(canvasWidth, canvasHeight);
         document.getElementById("game").appendChild(renderer.domElement);
 
+        const backgroundGroup = new THREE.Group();
+
         function drawLine(width, height, x, y, z, color) {
             const line = new THREE.Mesh(
                 new THREE.PlaneGeometry(width, height), 
                 new THREE.MeshBasicMaterial({color: color})
             );
             line.position.set(x, y, z);
-            scene.add(line);
+            backgroundGroup.add(line);
         }
 
         for (let i = 1; i < 8; i++) 
@@ -32,6 +34,8 @@ const Game = {
         drawLine(2, noteHeight, -0.5, 0, -0.1, 0xbe77ff);
         drawLine(2, noteHeight, trackWidth - 0.5, 0, -0.1, 0xbe77ff);
         
+        scene.add(backgroundGroup);
+
         return {
             scene: scene,
             camera: camera,

@@ -1,33 +1,53 @@
 const Note = {
-    Note: function(scene, key, ticks, type) {
-        const width = noteWidth * key.length,
-              height = noteHeight,
-              radius = noteRadius,
-              initX = noteWidth * (key[0]) + width / 2,
-              initY = ticks;
+    // new Note.Note(
+    //     group = notes, 
+    //     noteInfo: {
+    //         key: {start: int, length: int},
+    //         ticks: {start: float, end: float},
+    //         type: "Normal" / "Up" / "Down" / "Long",
+    //         special: true/ false
+    //     }
+    // )
+    Note: function(group, noteInfo) {
+        const key = noteInfo.key,
+              ticks = noteInfo.ticks,
+              type = noteInfo.type,
+              special = noteInfo.special;
 
-        const plane = new THREE.Mesh (
+        const initX = noteWidth * (key.start + key.length / 2),
+              initY = ticks.start;
+
+        const noteGeometry = Note.drawNote(key.length, type, special);
+
+        noteGeometry.position.set(initX, initY, 0);
+        group.add(noteGeometry);
+
+        this.down = function() {
+            if(noteGeometry.position.y > -30) {
+                noteGeometry.position.y -= speed;
+            }
+            else 
+                noteGeometry.position.y = 30100;
+        }
+    },
+    drawNote: function(length, type, special) {
+        const width = noteWidth * length,
+              height = noteHeight,
+              radius = noteRadius;
+
+        const notePlane = new THREE.Mesh (
             new THREE.PlaneGeometry(width, height),
             new THREE.MeshBasicMaterial({
                 map: new THREE.CanvasTexture(
-                    Note.noteImage(type, width, height, radius)
+                    Note.noteImage(type, special, width, height, radius)
                 ),
                 transparent: true
             })
         ); 
 
-        plane.position.set(initX, initY, 0);
-        scene.add(plane);
-
-        this.down = function() {
-            if(plane.position.y > -30) {
-                plane.position.y -= speed;
-            }
-            else 
-                plane.position.y = 20100;
-        }
+        return notePlane;
     },
-    noteImage: function(type, width, height, radius) {
+    noteImage: function(type, special, width, height, radius) {
         const canvas = document.createElement("canvas"),
               ctx = canvas.getContext("2d");
 
@@ -38,7 +58,7 @@ const Note = {
         canvas.height = height * scale;
         ctx.scale(scale, scale);
 
-        const color = Note.color[type];
+        const color = special ? Note.color["Special"] : Note.color[type];
 
         const grd = ctx.createLinearGradient(0, 0, 0, height);
         grd.addColorStop(0, color["topStart"]);
@@ -147,6 +167,6 @@ const Note = {
             "topEnd": "#f9f900",
             "mid": "#ffed97",
             "side": "#cfad17",
-        },
+        }
     }
 }
