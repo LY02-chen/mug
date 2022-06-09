@@ -184,6 +184,8 @@ const Note = {
 
         xhr.send();
 
+        text = text.filter(x => x.length);
+
         const start = text.indexOf("[start]") + 1,
                 end = text.indexOf("[end]");
 
