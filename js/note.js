@@ -15,19 +15,18 @@ const Note = {
               special = noteInfo.special;
 
         const initX = noteWidth * (key.start + key.length / 2),
-              initY = ticks.start;
+              startY = ticks.start,
+              endY = ticks.end;
 
         const noteGeometry = Note.drawNote(key.length, type, special);
 
-        noteGeometry.position.set(initX, initY, 0);
+        noteGeometry.position.set(initX, startY, 0);
         group.add(noteGeometry);
 
         this.down = function() {
-            if(noteGeometry.position.y > -30) {
+            if (noteGeometry.position.y > -30) {
                 noteGeometry.position.y -= speed;
             }
-            else 
-                noteGeometry.position.y = 30100;
         }
     },
     drawNote: function(length, type, special) {
@@ -168,5 +167,43 @@ const Note = {
             "mid": "#ffed97",
             "side": "#cfad17",
         }
+    },
+    read: function(speed, song, difficult) {
+        const file = `musicalScore/${song}/${difficult}.ms`;
+    
+        let text = "";
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", file, false);
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                text = xhr.responseText.split("\r\n");
+            }
+        };
+
+        xhr.send();
+
+        const start = text.indexOf("[start]") + 1,
+                end = text.indexOf("[end]");
+
+        return Array.from(
+            {length: end - start},
+            (x, index) => {
+                const info = text[start + index].split(",");
+                return {
+                    ticks: {
+                        start: parseFloat(info[0]) * 30, 
+                        end: parseFloat(info[1])
+                    },
+                    key: {
+                        start: parseFloat(info[2]), 
+                        length: parseFloat(info[3])
+                    },
+                    type: info[4],
+                    special: parseFloat(info[5])
+                }
+            }
+        );
     }
 }
