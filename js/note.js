@@ -178,14 +178,14 @@ const Note = {
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                text = xhr.responseText;
+                text = xhr.responseText.split("\r\n").split("\n");
             }
         };
 
         xhr.send();
 
         console.log(text);
-        text = text.split("\r\n").filter(x => x.length);
+        text = text.filter(x => x.length);
         console.log(text);
 
         const start = text.indexOf("[start]") + 1,
