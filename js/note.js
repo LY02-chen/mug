@@ -184,9 +184,7 @@ const Note = {
 
         xhr.send();
 
-        console.log(text);
         text = text.filter(x => x.length);
-        console.log(text);
 
         const start = text.indexOf("[start]") + 1,
                 end = text.indexOf("[end]");
@@ -194,7 +192,7 @@ const Note = {
         return Array.from(
             {length: end - start},
             (x, index) => {
-                const info = text[start + index].split(",");
+                const info = text[start + index].split(", ");
                 return {
                     ticks: {
                         start: parseFloat(info[0]) * 30, 
