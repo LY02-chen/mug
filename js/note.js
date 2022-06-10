@@ -3,15 +3,15 @@ const Note = {
     //     group = notes, 
     //     noteInfo: {
     //         key: {start: int, length: int},
-    //         ticks: {start: float, end: float},
     //         type: "Normal" / "Up" / "Down" / "Long",
+    //         ticks: {start: float, end: float},
     //         special: true/ false
     //     }
     // )
     Note: function(group, noteInfo) {
         const key = noteInfo.key,
-              ticks = noteInfo.ticks,
               type = noteInfo.type,
+              ticks = noteInfo.ticks,
               special = noteInfo.special;
 
         const initX = noteWidth * (key.start + key.length / 2),
@@ -168,9 +168,7 @@ const Note = {
             "side": "#cfad17",
         }
     },
-    read: function(speed, song, difficult) {
-        const file = `musicalScore/${song}/${difficult}.ms`;
-    
+    read: function(file) {
         let text = "";
 
         const xhr = new XMLHttpRequest();
@@ -178,34 +176,49 @@ const Note = {
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                text = xhr.responseText.split(/\r?\n/);
+                text = xhr.responseText
+                       .split(/\r?\n/)
+                       .filter(x => x.length)
+                       .map(x => x.split(" "));
             }
         };
 
         xhr.send();
 
-        text = text.filter(x => x.length);
+        const start = text.findIndex(x => x[0] == "[Start]") + 1,
+              end = text.findIndex(x => x[0] == "[End]");
+              
+        let BPM = 0,
+            Beat = 0;
 
-        const start = text.indexOf("[start]") + 1,
-                end = text.indexOf("[end]");
+        const notes = [];
 
-        return Array.from(
-            {length: end - start},
-            (x, index) => {
-                const info = text[start + index].split(", ");
-                return {
-                    ticks: {
-                        start: parseFloat(info[0]) * 30, 
-                        end: parseFloat(info[1])
-                    },
-                    key: {
-                        start: parseFloat(info[2]), 
-                        length: parseFloat(info[3])
-                    },
-                    type: info[4],
-                    special: parseFloat(info[5])
-                }
-            }
-        );
+        for (let i = start; i < end ; i++){
+            const tmp = text[i];
+            
+            if (tmp[0] == "[BPM]") {
+                BPM = parseInt(tmp[1]);
+                continue;
+            } 
+            if (tmp[0] == "[Beat]") {
+                Beat = parseInt(tmp[1]);
+                continue;
+            } 
+            
+            notes.push({
+                key: {
+                    start: tmp[1].indexOf("1"),
+                    length: tmp[1].replace(/0/g, "").length
+                },
+                type: "Normal",
+                ticks: {
+                    start: parseFloat(tmp[4]),
+                    end: parseFloat(tmp[5])
+                },
+                special: tmp[3] == "T" ? true : false
+            });
+        }
+
+        return notes;
     }
 }

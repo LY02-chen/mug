@@ -53,7 +53,7 @@ const Game = {
                 document.getElementById("canvas").remove(renderer.domElement);
             }
             
-            Game.down(notes);
+            // Game.down(notes);
     
             canvas.renderer.render(canvas.scene, canvas.camera);
         }

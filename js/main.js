@@ -1,6 +1,10 @@
 const gameCanvas = new Game.Init();
 
-const notesInfo = Note.read(0, "0001", "master");
+const title = "0001",
+      difficult = "master",
+      path = `musicalScore/${title}/${difficult}.ms`;
+
+const notesInfo = Note.read(path);
 
 const notesGroup = new THREE.Group();
 
