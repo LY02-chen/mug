@@ -15,7 +15,7 @@ const Note = {
               special = noteInfo.special;
 
         const initX = noteWidth * (key.start + key.length / 2),
-              startY = ticks.start,
+              startY = ticks.start * 0.6,
               endY = ticks.end;
 
         const noteGeometry = Note.drawNote(key.length, type, special);
@@ -201,23 +201,30 @@ const Note = {
                 continue;
             } 
             if (tmp[0] == "[Beat]") {
-                Beat = parseInt(tmp[1]);
+                Beat += parseInt(tmp[1]);
                 continue;
             } 
             
+            const beatToTicks = (beat) => {
+                return (beat + Beat) * 60 * 1000 / BPM;
+            }
+
             notes.push({
                 key: {
                     start: tmp[1].indexOf("1"),
                     length: tmp[1].replace(/0/g, "").length
                 },
-                type: "Normal",
+                type: tmp[2] == "N" ? "Normal" :
+                      tmp[2] == "U" ? "Up" :
+                      tmp[2] == "D" ? "Down" : "Long",
                 ticks: {
-                    start: parseFloat(tmp[4]),
-                    end: parseFloat(tmp[5])
+                    start: beatToTicks(parseFloat(tmp[4])),
+                    end: beatToTicks(parseFloat(tmp[5]))
                 },
                 special: tmp[3] == "T" ? true : false
             });
         }
+        console.log(notes);
 
         return notes;
     }
