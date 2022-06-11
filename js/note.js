@@ -15,26 +15,36 @@ const Note = {
               special = noteInfo.special;
 
         const initX = noteWidth * (key.start + key.length / 2),
-              startY = ticks.start * 0.6,
-              endY = ticks.end;
+              Y = {
+                start: ticks.start * 0.6,
+                end: ticks.end * 0.6
+              };
 
-        const noteGeometry = Note.drawNote(key.length, type, special);
+        const noteGeometry = Note.drawNote(key.length, type, special, Y);
 
-        noteGeometry.position.set(initX, startY, 0);
+        noteGeometry.position.set(initX, Y.start, 0);
         group.add(noteGeometry);
 
         this.down = function() {
-            if (noteGeometry.position.y > -40) {
+            if (noteGeometry.position.y + Y.end > -40) {
                 noteGeometry.position.y -= speed;
             }
         }
     },
-    drawNote: function(length, type, special) {
+    drawNote: function(length, type, special, Y) {
         const width = noteWidth * length,
               height = noteHeight,
               radius = noteRadius;
 
-        const notePlane = new THREE.Mesh (
+        const geometryArray = [],
+              materialArray = [];
+
+        function addGeometry(geomatry, material) {
+            geometryArray.push(geomatry);
+            materialArray.push(material);
+        }
+
+        addGeometry(
             new THREE.PlaneGeometry(width, height),
             new THREE.MeshBasicMaterial({
                 map: new THREE.CanvasTexture(
@@ -42,9 +52,30 @@ const Note = {
                 ),
                 transparent: true
             })
-        ); 
+        );
+        
+        if (type == "Long") {
+            const planeEnd = new THREE.PlaneGeometry(width, height);
+            
+            planeEnd.translate(0,Y.end - Y.start, 0);
 
-        return notePlane;
+            addGeometry(
+                planeEnd,
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.CanvasTexture(
+                        Note.noteImage(type, special, width, height, radius)
+                    ),
+                    transparent: true
+                })
+            );
+        }
+
+        const noteGeometry = 
+            THREE.BufferGeometryUtils.mergeBufferGeometries(
+                geometryArray, true
+            );
+                
+        return new THREE.Mesh(noteGeometry, materialArray);
     },
     noteImage: function(type, special, width, height, radius) {
         const canvas = document.createElement("canvas"),
@@ -224,7 +255,6 @@ const Note = {
                 special: tmp[3] == "T" ? true : false
             });
         }
-        console.log(notes);
 
         return notes;
     }
