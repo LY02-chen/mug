@@ -79,5 +79,6 @@
 [Note] 00110000 N F 5 0
 [Note] 00001100 N F 6 0
 [Note] 00110000 N F 7 0
-
+[Beat] 8
+[Note] 00011000 U T 0 0
 [End]
