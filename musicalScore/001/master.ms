@@ -18,7 +18,7 @@
 [Note] 00000011 N F 6 0
 [Note] 00001100 N F 7 0
 [Beat] 8
-[Note] 00000011 L F 0 7
+[Note] 00000011 L F 0 6
 [Note] 00110000 U F 0 0
 [Note] 11000000 D F 2 0
 [Note] 00110000 U F 4 0
@@ -65,7 +65,7 @@
 [Note] 00001100 N F 6 0
 [Note] 00110000 N F 7 0
 [Beat] 8
-[Note] 11000000 L F 0 7
+[Note] 11000000 L F 0 6
 [Note] 00110000 U F 0 0
 [Note] 00000011 D F 2 0
 [Note] 00001100 U F 4 0
