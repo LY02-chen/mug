@@ -48,7 +48,7 @@ const Note = {
             new THREE.PlaneGeometry(width, height),
             new THREE.MeshBasicMaterial({
                 map: new THREE.CanvasTexture(
-                    Note.noteImage(type, special, width, height, radius)
+                    Note.noteMaterial(type, special, width, height, radius)
                 ),
                 transparent: true
             })
@@ -61,7 +61,7 @@ const Note = {
                 planeEnd,
                 new THREE.MeshBasicMaterial({
                     map: new THREE.CanvasTexture(
-                        Note.noteImage(type, special, width, height, radius)
+                        Note.noteMaterial(type, special, width, height, radius)
                     ),
                     transparent: true
                 })
@@ -73,7 +73,7 @@ const Note = {
                 planeLong,
                 new THREE.MeshBasicMaterial({
                     map: new THREE.CanvasTexture(
-                        Note.longImage(special, width, Y.end - Y.start - height)
+                        Note.longMaterial(special, width, Y.end - Y.start - height)
                     ),
                     transparent: true
                 })
@@ -87,7 +87,7 @@ const Note = {
                 planeSlide,
                 new THREE.MeshBasicMaterial({
                     map: new THREE.CanvasTexture(
-                        Note.slideImage(type, special, width / 2, height, radius)
+                        Note.slideMaterial(type, special, width / 2, height, radius)
                     ),
                     transparent: true
                 })
@@ -101,7 +101,7 @@ const Note = {
             materialArray
         );
     },
-    noteImage: function(type, special, width, height, radius) {
+    noteMaterial: function(type, special, width, height, radius) {
         const canvas = document.createElement("canvas"),
               ctx = canvas.getContext("2d");
 
@@ -191,7 +191,7 @@ const Note = {
 
         return canvas;
     },
-    longImage: function(special, width, height) {
+    longMaterial: function(special, width, height) {
         const canvas = document.createElement("canvas"),
               ctx = canvas.getContext("2d");
 
@@ -209,7 +209,7 @@ const Note = {
 
         return canvas;
     },
-    slideImage: function(type, special, width, height, radius) {
+    slideMaterial: function(type, special, width, height, radius) {
         const canvas = document.createElement("canvas"),
               ctx = canvas.getContext("2d");
 

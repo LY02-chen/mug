@@ -42,7 +42,22 @@ const Game = {
             renderer: renderer
         };
     },
-    gameLoop: function(canvas, notes) {
+    gamePlay: function(canvas, notes, audio) {
+
+        const listener = new THREE.AudioListener();
+        canvas.camera.add( listener );
+
+        const sound = new THREE.Audio( listener );
+
+        const audioLoader = new THREE.AudioLoader();
+        audioLoader.load(audio , function( buffer ) {
+            sound.setBuffer( buffer );
+            sound.setVolume( volume / 100 );
+            sound.play();
+        });
+
+        
+
         function loop() {
             const animate = requestAnimationFrame(loop);
     

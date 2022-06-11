@@ -1,10 +1,11 @@
 const gameCanvas = new Game.Init();
 
-const title = "0001",
+const title = 0,
       difficult = "master",
-      path = `musicalScore/${title}/${difficult}.ms`;
+      ms = `${songList[title].ms}${difficult}.ms`,
+      audio = `${songList[title].audio}`;
 
-const notesInfo = Note.read(path);
+const notesInfo = Note.read(ms);
 
 const notesGroup = new THREE.Group();
 
@@ -15,4 +16,4 @@ const notesList = Array.from(
 
 gameCanvas.scene.add(notesGroup);
 
-Game.gameLoop(gameCanvas, notesList);
+Game.gamePlay(gameCanvas, notesList, audio);
