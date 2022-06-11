@@ -56,9 +56,7 @@ const Note = {
         
         if (type == "Long") {
             const planeEnd = new THREE.PlaneGeometry(width, height);
-            
-            planeEnd.translate(0,Y.end - Y.start, 0);
-
+            planeEnd.translate(0, Y.end - Y.start, 0);
             addGeometry(
                 planeEnd,
                 new THREE.MeshBasicMaterial({
@@ -68,14 +66,40 @@ const Note = {
                     transparent: true
                 })
             );
-        }
 
-        const noteGeometry = 
+            const planeLong = new THREE.PlaneGeometry(width, Y.end - Y.start - height);
+            planeLong.translate(0, (Y.end - Y.start) / 2, 0);
+            addGeometry(
+                planeLong,
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.CanvasTexture(
+                        Note.longImage(special, width, Y.end - Y.start - height)
+                    ),
+                    transparent: true
+                })
+            );
+        }
+        else if (type == "Up" || type == "Down") {
+            const planeSlide = new THREE.PlaneGeometry(width / 2, height);
+            planeSlide.rotateX(Math.PI * 0.5);
+            planeSlide.translate(0, 0, height);
+            addGeometry(
+                planeSlide,
+                new THREE.MeshBasicMaterial({
+                    map: new THREE.CanvasTexture(
+                        Note.slideImage(type, special, width / 2, height, radius)
+                    ),
+                    transparent: true
+                })
+            );
+        }
+                
+        return new THREE.Mesh(
             THREE.BufferGeometryUtils.mergeBufferGeometries(
                 geometryArray, true
-            );
-                
-        return new THREE.Mesh(noteGeometry, materialArray);
+            ), 
+            materialArray
+        );
     },
     noteImage: function(type, special, width, height, radius) {
         const canvas = document.createElement("canvas"),
@@ -83,7 +107,7 @@ const Note = {
 
         const offset = noteOffset;
 
-        const scale = 20;
+        const scale = canvasScale;
         canvas.width = width * scale;
         canvas.height = height * scale;
         ctx.scale(scale, scale);
@@ -100,6 +124,7 @@ const Note = {
 
             ctx.translate(dx, dy);
             ctx.beginPath();
+
             ctx.arc(radius, radius, 
                     radius, Math.PI * 1, Math.PI * 1.5);
             ctx.lineTo(width - radius * 2, 0);
@@ -109,8 +134,9 @@ const Note = {
             ctx.arc(width - radius, height - radius, 
                     radius, 0, Math.PI * 0.5);
             ctx.lineTo(radius, height);
-            ctx.arc(radius, height - radius, 
+            ctx.arc(radius, height - radius,
                     radius, Math.PI * 0.5, Math.PI);
+                    
             ctx.closePath();
             ctx.fill();
             ctx.translate(-dx, -dy);
@@ -142,17 +168,20 @@ const Note = {
 
         drawRect(
             width, height * (1 - offset), 
-            radius, "bottom", 
+            radius, 
+            "bottom", 
             0, height * offset
         );
         drawRect(
             width, height * (1 - offset), 
-            radius, "top", 
+            radius, 
+            "top", 
             0, 0
         );
         drawRect(
             width - height * (offset * 2), height * (1 - offset * 3), 
-            radius * (1 - offset * 3), "mid", 
+            radius * (1 - offset * 3), 
+            "mid", 
             height * offset, height * offset
         );
         drawSide(
@@ -162,13 +191,85 @@ const Note = {
 
         return canvas;
     },
+    longImage: function(special, width, height) {
+        const canvas = document.createElement("canvas"),
+              ctx = canvas.getContext("2d");
+
+        const offset = noteOffset;
+
+        const scale = canvasScale;
+        canvas.width = width * scale;
+        canvas.height = height * scale;
+        ctx.scale(scale, scale);
+
+        ctx.fillStyle = (special ? 
+            Note.color["Special"] : 
+            Note.color["Long"])["long"];
+        ctx.fillRect(width * (offset / 2), 0, width * (1 - offset), height);
+
+        return canvas;
+    },
+    slideImage: function(type, special, width, height, radius) {
+        const canvas = document.createElement("canvas"),
+              ctx = canvas.getContext("2d");
+
+        const offset = noteOffset;
+
+        const scale = canvasScale;
+        canvas.width = width * scale;
+        canvas.height = height * scale;
+        ctx.scale(scale, scale);
+
+        if (type == "Up") {
+            ctx.translate(width, height);
+            ctx.rotate(Math.PI);
+        }
+
+        const color = special ? Note.color["Special"] : Note.color[type];
+
+        const degree = Math.atan((height * 0.4) / (width / 2));
+
+        function drawArrow(width, height, radius, part, dx, dy) {
+            ctx.fillStyle = color[part];
+
+            ctx.translate(dx, dy);
+            ctx.beginPath();
+
+            ctx.moveTo(0, 0);
+            ctx.lineTo(width / 2, (width / 2) * Math.tan(degree));
+            ctx.lineTo(width, 0);
+            ctx.lineTo(width, height - (width / 2) * Math.tan(degree));
+            ctx.lineTo(width / 2, height);
+            ctx.lineTo(0, height - (width / 2) * Math.tan(degree));
+
+            ctx.closePath();
+            ctx.fill();
+            ctx.translate(-dx, -dy);
+        }
+
+        drawArrow(
+            width, height,
+            radius, 
+            "slideFrame",
+            0, 0
+        );
+        drawArrow(
+            width - height * offset, height * (1 - offset / 2 * (Math.tan(Math.PI / 4 + degree / 2) + Math.sqrt(2))),
+            radius * (1 - offset), 
+            "slideSolid",
+            height * offset / 2, (height * offset / 2) * Math.tan(Math.PI / 4 + degree / 2)
+        );
+
+        return canvas;
+    }
+    ,
     color: {
         "Normal": {
             "bottom": "#80ffff",
             "topStart": "#ca8eff",
             "topEnd": "#acd6ff",
             "mid": "#c4e1ff",
-            "side": "#7d7dff",
+            "side": "#7d7dff"
         },
         "Up": {
             "bottom": "#ffb6c1",
@@ -176,6 +277,8 @@ const Note = {
             "topEnd": "#eca7be",
             "mid": "#ffd9ec",
             "side": "#d56767",
+            "slideFrame": "#de6890",
+            "slideSolid": "#eca7be"
         },
         "Down": {
             "bottom": "#acd6ff",
@@ -183,6 +286,8 @@ const Note = {
             "topEnd": "#66b3ff",
             "mid": "#66b3ff",
             "side": "#2e2eff",
+            "slideFrame": "#0066cc",
+            "slideSolid": "#66b3ff"
         },
         "Long": {
             "bottom": "#93ff93",
@@ -190,6 +295,7 @@ const Note = {
             "topEnd": "#7afec6",
             "mid": "#c1ffe4",
             "side": "#01b468",
+            "long": "rgba(193, 255, 228, 0.8)"
         },
         "Special": {
             "bottom": "#ffffaa",
@@ -197,6 +303,9 @@ const Note = {
             "topEnd": "#f9f900",
             "mid": "#ffed97",
             "side": "#cfad17",
+            "slideFrame": "#ffd306",
+            "slideSolid": "#f9f900",
+            "long": "rgba(255, 237, 151, 0.8)"
         }
     },
     read: function(file) {
