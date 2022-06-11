@@ -82,7 +82,7 @@ const Note = {
         else if (type == "Up" || type == "Down") {
             const planeSlide = new THREE.PlaneGeometry(width / 2, height);
             planeSlide.rotateX(Math.PI * 0.5);
-            planeSlide.translate(0, 0, height);
+            planeSlide.translate(0, 0, height * 2);
             addGeometry(
                 planeSlide,
                 new THREE.MeshBasicMaterial({
