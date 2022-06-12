@@ -8,7 +8,7 @@ const songList = [
     {
         title: "Tempestissimo",
         ms: "ms/001/",
-        audio: "audio/Tempestissimo.mp3",
+        audio: "audio/001.mp3",
         dif: [0, 0, 0, 0, 1, 0]
     }
 ]

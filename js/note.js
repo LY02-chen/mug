@@ -349,7 +349,7 @@ const Note = {
             } 
             
             const beatToTicks = (beat) => {
-                return (beat + Beat) * 60 * 1000 / BPM;
+                return (beat + Beat) * 60 * 1000 / BPM + 5000;
             }
 
             notes.push({
