@@ -44,8 +44,8 @@ const Game = {
     },
     gamePlay: function(song, difficult) {
         const canvas = new Game.Init();
-        const ms = `${songList[song].ms}${difficult}.ms`,
-              audio = `${songList[song].audio}`;
+        const ms = `${songList[song].path}${difficult}.ms`,
+              audio = `${songList[song].path}audio.mp3`;
     
         const notesInfo = Note.read(ms);
     
@@ -59,7 +59,7 @@ const Game = {
         canvas.scene.add(notesGroup);
 
         canvas.renderer.render(canvas.scene, canvas.camera);
-        
+
         let startTime = 0;
 
         const listener = new THREE.AudioListener();

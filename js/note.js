@@ -200,10 +200,8 @@ const Note = {
 
         const offset = noteOffset;
 
-        const scale = canvasScale;
-        canvas.width = width * scale;
-        canvas.height = height * scale;
-        ctx.scale(scale, scale);
+        canvas.width = width;
+        canvas.height = height;
 
         ctx.fillStyle = (special ? 
             Note.color["Special"] : 
@@ -349,7 +347,7 @@ const Note = {
             } 
             
             const beatToTicks = (beat) => {
-                return (beat + Beat) * 60 * 1000 / BPM + 5000;
+                return (beat + Beat) * 60 * 1000 / BPM + 5500;
             }
 
             notes.push({

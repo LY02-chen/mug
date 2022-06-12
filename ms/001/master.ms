@@ -9,8 +9,8 @@
 [Start]
 [BPM] 231
 [Beat] 0
-[Note] 11000000 L F 0 6
-[Note] 00001100 N T 0 0
+[Note] 11000000 L T 0 7
+[Note] 00001100 N F 0 0
 [Note] 00110000 N F 3 3
 [Note] 00001100 N F 3.5 3.5
 [Note] 00110000 N F 4 4
@@ -18,14 +18,14 @@
 [Note] 00000011 N F 6 6
 [Note] 00001100 N F 7 7
 [Beat] 8
-[Note] 00000011 L F 0 6
+[Note] 00000011 L T 0 6
 [Note] 00110000 U F 0 0
 [Note] 11000000 D F 2 2
 [Note] 00110000 U F 4 4
 [Note] 00001100 D F 6 6
 [Beat] 8
-[Note] 11000000 L F 0 7
-[Note] 00001100 N T 0 0
+[Note] 11000000 L T 0 7
+[Note] 00001100 N F 0 0
 [Note] 00110000 N F 3 3
 [Note] 00001100 N F 3.5 3.5
 [Note] 00110000 N F 4 4
@@ -56,8 +56,8 @@
 [Beat] 4
 [Note] 00110000 N F 0 0
 [Beat] 1
-[Note] 00000011 L F 0 7
-[Note] 00001100 N T 0 0
+[Note] 00000011 L T 0 7
+[Note] 00001100 N F 0 0
 [Note] 00001100 N F 3 3
 [Note] 00110000 N F 3.5 3.5
 [Note] 11000000 N F 4 4
@@ -65,14 +65,14 @@
 [Note] 00001100 N F 6 6
 [Note] 00110000 N F 7 7
 [Beat] 8
-[Note] 11000000 L F 0 6
+[Note] 11000000 L T 0 6
 [Note] 00110000 U F 0 0
 [Note] 00000011 D F 2 2
 [Note] 00001100 U F 4 4
 [Note] 00110000 D F 6 6
 [Beat] 8
-[Note] 00000011 L F 0 7
-[Note] 00001100 N T 0 0
+[Note] 00000011 L T 0 7
+[Note] 00001100 N F 0 0
 [Note] 00001100 N F 3 3
 [Note] 00110000 N F 3.5 3.5
 [Note] 11000000 N F 4 4
