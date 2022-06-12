@@ -14,10 +14,14 @@ const Note = {
               ticks = noteInfo.ticks,
               special = noteInfo.special;
 
+        const ticksToY = (time) => {
+            return time * speed / 10;
+        }
+
         const initX = noteWidth * (key.start + key.length / 2),
               Y = {
-                start: ticks.start * 0.6,
-                end: ticks.end * 0.6
+                start: ticksToY(ticks.start),
+                end: ticksToY(ticks.end)
               };
 
         const noteGeometry = Note.drawNote(key.length, type, special, Y);
@@ -25,10 +29,9 @@ const Note = {
         noteGeometry.position.set(initX, Y.start, 0);
         group.add(noteGeometry);
 
-        this.down = function() {
-            if (noteGeometry.position.y + Y.end > -40) {
-                noteGeometry.position.y -= speed;
-            }
+        this.down = (time) => {
+            if (noteGeometry.position.y + (Y.end - Y.start) > -100)
+                noteGeometry.position.y = ticksToY(ticks.start - time);
         }
     },
     drawNote: function(length, type, special, Y) {

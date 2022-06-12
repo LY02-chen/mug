@@ -42,7 +42,23 @@ const Game = {
             renderer: renderer
         };
     },
-    gamePlay: function(canvas, notes, audio) {
+    gamePlay: function(song, difficult) {
+        const canvas = new Game.Init();
+        const ms = `${songList[song].ms}${difficult}.ms`,
+              audio = `${songList[song].audio}`;
+    
+        const notesInfo = Note.read(ms);
+    
+        const notesGroup = new THREE.Group();
+    
+        const notes = Array.from(
+            {length: notesInfo.length},
+            (x, index) => new Note.Note(notesGroup, notesInfo[index])
+        );
+    
+        canvas.scene.add(notesGroup);
+
+        let startTime = 0;
 
         const listener = new THREE.AudioListener();
         canvas.camera.add( listener );
@@ -54,29 +70,27 @@ const Game = {
             sound.setBuffer( buffer );
             sound.setVolume( volume / 100 );
             sound.play();
+            startTime = Date.now();
+            loop();
         });
-
-        
 
         function loop() {
             const animate = requestAnimationFrame(loop);
     
-            if (false) {            
-                console.log(scene);
-                console.log(renderer);
-                cancelAnimationFrame( id );
-                document.getElementById("canvas").remove(renderer.domElement);
+            if (pause) {            
+                cancelAnimationFrame( animate );
+                sound.stop();
+                document.getElementById("game").removeChild(canvas.renderer.domElement);
             }
-            
-            Game.down(notes);
+        
+            Game.down(notes, Date.now() - startTime);
     
             canvas.renderer.render(canvas.scene, canvas.camera);
         }
-        loop();
     },
-    down: function(notes) {
+    down: function(notes, time) {
         for(let i in notes) {
-            notes[i].down();
+            notes[i].down(time);
         }
     }
 };
