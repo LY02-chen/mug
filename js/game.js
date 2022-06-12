@@ -58,6 +58,8 @@ const Game = {
     
         canvas.scene.add(notesGroup);
 
+        canvas.renderer.render(canvas.scene, canvas.camera);
+        
         let startTime = 0;
 
         const listener = new THREE.AudioListener();
