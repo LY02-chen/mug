@@ -66,7 +66,7 @@ const Game = {
             new THREE.MeshBasicMaterial({
                 color: 0x000000,
                 transparent: true,
-                opacity: 0.5
+                opacity: 0.6
             })
         );
         p2.rotateX(cameraDegree);
@@ -106,7 +106,7 @@ const Game = {
         audioLoader.load(audio , function( buffer ) {
             sound.setBuffer( buffer );
             sound.setVolume( volume / 100 );
-            // sound.play();
+            sound.play();
             startTime = Date.now();
             canvas.renderer.render(canvas.scene, canvas.camera);
             loop();
@@ -117,7 +117,7 @@ const Game = {
     
             if (pause) {            
                 cancelAnimationFrame( animate );
-                // sound.stop();
+                sound.stop();
                 document.getElementById("game").removeChild(canvas.renderer.domElement);
             }
         

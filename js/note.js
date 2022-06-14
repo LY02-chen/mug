@@ -79,8 +79,7 @@ const Note = {
                 new THREE.MeshBasicMaterial({
                     map: new THREE.CanvasTexture(
                         Note.longMaterial(special, width, Y.end - Y.start - height)
-                    ),
-                    transparent: true
+                    )
                 })
             );
         }
@@ -264,8 +263,7 @@ const Note = {
         );
 
         return canvas;
-    }
-    ,
+    },
     color: {
         "Note": {
             "bottom": "#80ffff",
@@ -298,7 +296,7 @@ const Note = {
             "topEnd": "#7afec6",
             "mid": "#c1ffe4",
             "side": "#01b468",
-            "long": "rgba(193, 255, 228, 0.8)"
+            "long": "#d6ffed"
         },
         "Special": {
             "bottom": "#ffffaa",
@@ -308,7 +306,7 @@ const Note = {
             "side": "#cfad17",
             "slideFrame": "#ffd306",
             "slideSolid": "#f9f900",
-            "long": "rgba(255, 237, 151, 0.8)"
+            "long": "#fff3b8"
         }
     },
     read: function(file) {
