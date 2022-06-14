@@ -10,7 +10,7 @@ const songList = [
         dif: [0, 0, 0, 0, 1, 0]
     },
     {
-        title: "Don’t Fight The Music",
+        title: "Don't Fight The Music",
         path: "ms/002/",
         dif: [0, 0, 0, 0, 1, 0]
     },
