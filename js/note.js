@@ -302,7 +302,7 @@ const Note = {
             "mid": "#c1ffe4",
             "side": "#01b468",
             "longFrame": "#7df2b4",
-            "longSolid": "#d6ffed"
+            "longSolid": "#a8fad7"
         },
         "Special": {
             "bottom": "#ffffaa",

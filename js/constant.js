@@ -14,7 +14,7 @@ const cameraPos = [-120, 120],
       keyCount = 8,
       trackWidth = noteWidth * keyCount;
 
-let speed = 12,
+let speed = 6,
     volume = 50;
 
 let pause = false;
