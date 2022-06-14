@@ -8,7 +8,7 @@ const canvasWidth = 800,
       keyCount = 8,
       trackWidth = noteWidth * keyCount;
 
-let speed = 6,
+let speed = 12,
     volume = 50;
 
 let pause = false;
