@@ -3,16 +3,18 @@ const Note = {
     //     group = notes, 
     //     noteInfo: {
     //         key: {start: int, length: int},
-    //         type: "Normal" / "Up" / "Down" / "Long",
+    //         type: "Note" / "Up" / "Down" / "Long",
     //         ticks: {start: float, end: float},
-    //         special: true/ false
+    //         special: true/ false,
+    //         front: true/ false
     //     }
     // )
     Note: function(group, noteInfo) {
         const key = noteInfo.key,
               type = noteInfo.type,
               ticks = noteInfo.ticks,
-              special = noteInfo.special;
+              special = noteInfo.special,
+              front = noteInfo.front;
 
         const ticksToY = (time) => {
             return time * speed / 10;
@@ -21,7 +23,7 @@ const Note = {
         const initX = noteWidth * (key.start + key.length / 2),
               Y = {
                 start: ticksToY(ticks.start),
-                end: ticksToY(ticks.end)
+                end: ticksToY(ticks.end) - (front ? noteHeight : 0)
               };
 
         const noteGeometry = Note.drawNote(key.length, type, special, Y);
@@ -265,7 +267,7 @@ const Note = {
     }
     ,
     color: {
-        "Normal": {
+        "Note": {
             "bottom": "#80ffff",
             "topStart": "#ca8eff",
             "topEnd": "#acd6ff",
@@ -336,13 +338,13 @@ const Note = {
 
         for (let i = start; i < end ; i++){
             const tmp = text[i];
-            
+
             if (tmp[0] == "[BPM]") {
                 BPM = parseInt(tmp[1]);
                 continue;
             } 
             if (tmp[0] == "[Beat]") {
-                Beat += parseInt(tmp[1]);
+                Beat += parseFloat(tmp[1]);
                 continue;
             } 
             
@@ -352,17 +354,20 @@ const Note = {
 
             notes.push({
                 key: {
-                    start: tmp[1].indexOf("1"),
-                    length: tmp[1].replace(/0/g, "").length
+                    start: tmp[2].indexOf("1"),
+                    length: tmp[2].replace(/0/g, "").length
                 },
-                type: tmp[2] == "N" ? "Normal" :
-                      tmp[2] == "U" ? "Up" :
-                      tmp[2] == "D" ? "Down" : "Long",
+                type: tmp[0] == "[Note]" ? "Note" :
+                      tmp[0] == "[Up__]" ? "Up" :
+                      tmp[0] == "[Down]" ? "Down" : "Long",
                 ticks: {
-                    start: beatToTicks(parseFloat(tmp[4])),
-                    end: beatToTicks(parseFloat(tmp[5]))
+                    start: beatToTicks(parseFloat(tmp[3])),
+                    end: tmp[0] == "[Long]" ? 
+                         beatToTicks(parseFloat(tmp[4])) : 
+                         beatToTicks(parseFloat(tmp[3]))
                 },
-                special: tmp[3] == "T" ? true : false
+                special: tmp[1] == "[True_]" ? true : false,
+                front: tmp[0] == "[Long]" && tmp[5] == "Front" ? true : false
             });
         }
 
