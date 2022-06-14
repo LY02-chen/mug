@@ -206,8 +206,13 @@ const Note = {
 
         ctx.fillStyle = (special ? 
             Note.color["Special"] : 
-            Note.color["Long"])["long"];
-        ctx.fillRect(width * (offset / 2), 0, width * (1 - offset), height);
+            Note.color["Long"])["longFrame"];
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = (special ? 
+            Note.color["Special"] : 
+            Note.color["Long"])["longSolid"];
+        ctx.fillRect(width * offset, 0, width * (1 - offset * 2), height);
 
         return canvas;
     },
@@ -296,7 +301,8 @@ const Note = {
             "topEnd": "#7afec6",
             "mid": "#c1ffe4",
             "side": "#01b468",
-            "long": "#d6ffed"
+            "longFrame": "#7df2b4",
+            "longSolid": "#d6ffed"
         },
         "Special": {
             "bottom": "#ffffaa",
@@ -306,7 +312,8 @@ const Note = {
             "side": "#cfad17",
             "slideFrame": "#ffd306",
             "slideSolid": "#f9f900",
-            "long": "#fff3b8"
+            "longFrame": "#ffe561",
+            "longSolid": "#fff3b8"
         }
     },
     read: function(file) {

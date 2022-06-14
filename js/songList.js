@@ -7,7 +7,7 @@ const songList = [
     {
         title: "Tempestissimo",
         path: "ms/001/",
-        dif: [0, 0, 0, 0, 1, 0]
+        dif: [0, 0, 0, 0, 1, 1]
     },
     {
         title: "Don't Fight The Music",
@@ -22,6 +22,11 @@ const songList = [
     {
         title: "エンドマークに希望と涙を添えて",
         path: "ms/004/",
+        dif: [0, 0, 0, 0, 1, 0]
+    },
+    {
+        title: "マシンガンポエムドール",
+        path: "ms/005/",
         dif: [0, 0, 0, 0, 1, 0]
     }
 ]

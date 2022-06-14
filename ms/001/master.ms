@@ -36,26 +36,26 @@
 [Note] [False] 00000011 6
 [Note] [False] 00001100 7
 [Beat] 8
-[Note] [False] 00011000 0
-[Note] [False] 00011000 0.25
-[Note] [False] 00011000 0.5
-[Note] [False] 00011000 0.75
+[Note] [False] 00001000 0
+[Note] [False] 00010000 0.25
+[Note] [False] 00001000 0.5
+[Note] [False] 00010000 0.75
 [Beat] 1
-[Note] [False] 00011000 0
-[Note] [False] 00011000 0.25
-[Note] [False] 00011000 0.5
-[Note] [False] 00011000 0.75
+[Note] [False] 00001000 0
+[Note] [False] 00010000 0.25
+[Note] [False] 00001000 0.5
+[Note] [False] 00010000 0.75
 [Beat] 1
-[Note] [False] 00011000 0
-[Note] [False] 00011000 0.25
-[Note] [False] 00011000 0.5
-[Note] [False] 00011000 0.75
+[Note] [False] 00001000 0
+[Note] [False] 00010000 0.25
+[Note] [False] 00001000 0.5
+[Note] [False] 00010000 0.75
 [Beat] 1
-[Note] [False] 00011000 0
-[Note] [False] 00011000 0.25
-[Note] [False] 00011000 0.5
-[Note] [False] 00011000 0.75
-[Note] [True_] 00011000 1
+[Note] [False] 00001000 0
+[Note] [False] 00010000 0.25
+[Note] [False] 00001000 0.5
+[Note] [False] 00010000 0.75
+[Up__] [True_] 00001000 1
 [Beat] 4
 [Note] [False] 00110000 0
 [Beat] 1
