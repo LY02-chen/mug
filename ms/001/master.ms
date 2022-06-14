@@ -316,32 +316,32 @@
 [Note] [False] 00110000 3
 [Note] [False] 11000000 3.5
 [Beat] 4
-[Up__] [False] 01100000 0
+[Up__] [True_] 01100000 0
 [Note] [False] 00001100 0
-[Up__] [False] 01100000 0.5
+[Up__] [True_] 01100000 0.5
 [Beat] 1
-[Up__] [False] 01100000 0
+[Up__] [True_] 01100000 0
 [Note] [False] 00000011 0
-[Up__] [False] 01100000 0.5
+[Up__] [True_] 01100000 0.5
 [Beat] 1
-[Up__] [False] 01100000 0
+[Up__] [True_] 01100000 0
 [Note] [False] 00001100 0
-[Up__] [False] 01100000 0.5
+[Up__] [True_] 01100000 0.5
 [Note] [False] 00110000 0.75
 [Beat] 1
-[Up__] [False] 01100000 0
+[Up__] [True_] 01100000 0
 [Long] [False] 00110000 0.5 1.5 Back
 [Note] [False] 00001100 0.5
 [Beat] 1
-[Up__] [False] 00000110 0
-[Up__] [False] 00000110 0.5
+[Up__] [True_] 00000110 0
+[Up__] [True_] 00000110 0.5
 [Note] [False] 00110000 0.75
 [Beat] 1
-[Up__] [False] 00000110 0
-[Up__] [False] 00000110 0.5
+[Up__] [True_] 00000110 0
+[Up__] [True_] 00000110 0.5
 [Note] [False] 00001100 0.5
 [Beat] 1
-[Up__] [False] 00000110 0
+[Up__] [True_] 00000110 0
 [Note] [False] 00110000 0
 [Note] [False] 00000011 0.5
 [Beat] 1
