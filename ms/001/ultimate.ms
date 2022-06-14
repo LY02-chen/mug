@@ -22,16 +22,16 @@
 [Note] [False] 00000100 6
 [Note] [False] 00001000 7
 [Beat] 8
-[Long] [True_] 11000000 0 7 Back
-[Long] [True_] 00000011 0 7 Back
-[Up__] [False] 00010000 0
-[Long] [False] 00001000 0 1 Front
-[Down] [False] 00100000 2
-[Long] [False] 00000100 2 3 Front
-[Up__] [False] 00010000 4
-[Long] [False] 00001000 4 5 Front
-[Down] [False] 00001000 6
-[Long] [False] 00010000 6 7 Front
+[Long] [True_] 00110000 0 7 Back
+[Long] [True_] 00001100 0 7 Back
+[Up__] [False] 01000000 0
+[Up__] [False] 00000010 0
+[Down] [False] 10000000 2
+[Down] [False] 00000001 2
+[Up__] [False] 01000000 4
+[Up__] [False] 00000010 4
+[Down] [False] 01000000 6
+[Down] [False] 00000010 6
 [Beat] 8
 [Long] [True_] 11000000 0 7 Back
 [Long] [True_] 00000011 0 7 Back
@@ -93,16 +93,16 @@
 [Note] [False] 00001000 6
 [Note] [False] 00010000 7
 [Beat] 8
-[Long] [True_] 11000000 0 7 Back
-[Long] [True_] 00000011 0 7 Back
-[Up__] [False] 00010000 0
-[Long] [False] 00001000 0 1 Front
-[Down] [False] 00000100 2
-[Long] [False] 00100000 2 3 Front
-[Up__] [False] 00001000 4
-[Long] [False] 00010000 4 5 Front
-[Down] [False] 00010000 6
-[Long] [False] 00001000 6 7 Front
+[Long] [True_] 00110000 0 7 Back
+[Long] [True_] 00001100 0 7 Back
+[Up__] [False] 01000000 0
+[Up__] [False] 00000010 0
+[Down] [False] 10000000 2
+[Down] [False] 00000001 2
+[Up__] [False] 01000000 4
+[Up__] [False] 00000010 4
+[Down] [False] 01000000 6
+[Down] [False] 00000010 6
 [Beat] 8
 [Long] [True_] 11000000 0 7 Back
 [Long] [True_] 00000011 0 7 Back
