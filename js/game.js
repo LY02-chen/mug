@@ -46,22 +46,21 @@ const Game = {
                 map: new THREE.TextureLoader().load(`${path}image.jpg`)
             })
         );
-
         image.rotateX(cameraDegree);
         image.position.set(trackWidth / 2, 3000, -1000)
         backgroundGroup.add(image);
         
-        const p1 = new THREE.Mesh(
+        const planeBackground = new THREE.Mesh(
             new THREE.PlaneGeometry(5000, 5000), 
             new THREE.MeshBasicMaterial({
                 color: 0x5b5b5b
             })
         );
-        p1.rotateX(cameraDegree);
-        p1.position.set(trackWidth / 2, 3001, -1001);
-        backgroundGroup.add(p1);
+        planeBackground.rotateX(cameraDegree);
+        planeBackground.position.set(trackWidth / 2, 3001, -1001);
+        backgroundGroup.add(planeBackground);
 
-        const p2 = new THREE.Mesh(
+        const planeShadow = new THREE.Mesh(
             new THREE.PlaneGeometry(5000, 5000), 
             new THREE.MeshBasicMaterial({
                 color: 0x000000,
@@ -69,9 +68,9 @@ const Game = {
                 opacity: 0.6
             })
         );
-        p2.rotateX(cameraDegree);
-        p2.position.set(trackWidth / 2, 2999, -999);
-        backgroundGroup.add(p2);
+        planeShadow.rotateX(cameraDegree);
+        planeShadow.position.set(trackWidth / 2, 2999, -999);
+        backgroundGroup.add(planeShadow);
 
         return backgroundGroup;
     },
@@ -98,14 +97,14 @@ const Game = {
         let startTime = 0;
 
         const listener = new THREE.AudioListener();
-        canvas.camera.add( listener );
+        canvas.camera.add(listener);
 
-        const sound = new THREE.Audio( listener );
+        const sound = new THREE.Audio(listener);
 
         const audioLoader = new THREE.AudioLoader();
-        audioLoader.load(audio , function( buffer ) {
-            sound.setBuffer( buffer );
-            sound.setVolume( volume / 100 );
+        audioLoader.load(audio , function(buffer) {
+            sound.setBuffer(buffer);
+            sound.setVolume(volume / 100);
             sound.play();
             startTime = Date.now();
             canvas.renderer.render(canvas.scene, canvas.camera);
@@ -116,7 +115,7 @@ const Game = {
             const animate = requestAnimationFrame(loop);
     
             if (pause) {            
-                cancelAnimationFrame( animate );
+                cancelAnimationFrame(animate);
                 sound.stop();
                 document.getElementById("game").removeChild(canvas.renderer.domElement);
             }
