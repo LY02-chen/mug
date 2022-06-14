@@ -1,18 +1,24 @@
 const Game = {
     Init: function() {
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x5b5b5b);
         
         const camera = new THREE.PerspectiveCamera(
-            45, 16 / 9, 0.1, 2000
+            45, 16 / 9, 0.1, 10000
         );
-        camera.position.set(trackWidth / 2, -120, 120);
-        camera.lookAt(trackWidth / 2, 100, 0);
+        camera.position.set(trackWidth / 2, cameraPos[0], cameraPos[1]);
+        camera.lookAt(trackWidth / 2, cameraLook[0], cameraLook[1]);
         
         const renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(canvasWidth, canvasHeight);
         document.getElementById("game").appendChild(renderer.domElement);
 
+        return {
+            scene: scene,
+            camera: camera,
+            renderer: renderer
+        };
+    },
+    drawBackground: function(path) {
         const backgroundGroup = new THREE.Group();
 
         function drawLine(width, height, x, y, z, color) {
@@ -33,20 +39,51 @@ const Game = {
         drawLine(trackWidth, 2, trackWidth / 2, noteHeight / -2 + 1, -0.1, 0xbe77ff);
         drawLine(2, noteHeight, -0.5, 0, -0.1, 0xbe77ff);
         drawLine(2, noteHeight, trackWidth - 0.5, 0, -0.1, 0xbe77ff);
-        
-        scene.add(backgroundGroup);
 
-        return {
-            scene: scene,
-            camera: camera,
-            renderer: renderer
-        };
+        const image = new THREE.Mesh(
+            new THREE.PlaneGeometry(1500, 1500), 
+            new THREE.MeshBasicMaterial({
+                map: new THREE.TextureLoader().load(`${path}image.jpg`)
+            })
+        );
+
+        image.rotateX(cameraDegree);
+        image.position.set(trackWidth / 2, 3000, -1000)
+        backgroundGroup.add(image);
+        
+        const p1 = new THREE.Mesh(
+            new THREE.PlaneGeometry(5000, 5000), 
+            new THREE.MeshBasicMaterial({
+                color: 0x5b5b5b
+            })
+        );
+        p1.rotateX(cameraDegree);
+        p1.position.set(trackWidth / 2, 3001, -1001);
+        backgroundGroup.add(p1);
+
+        const p2 = new THREE.Mesh(
+            new THREE.PlaneGeometry(5000, 5000), 
+            new THREE.MeshBasicMaterial({
+                color: 0x000000,
+                transparent: true,
+                opacity: 0.5
+            })
+        );
+        p2.rotateX(cameraDegree);
+        p2.position.set(trackWidth / 2, 2999, -999);
+        backgroundGroup.add(p2);
+
+        return backgroundGroup;
     },
     gamePlay: function(song, difficult) {
         const canvas = new Game.Init();
-        const ms = `${songList[song].path}${difficult}.ms`,
-              audio = `${songList[song].path}audio.mp3`;
+
+        const path = `${songList[song].path}`,
+              ms = `${path}${difficult}.ms`,
+              audio = `${path}audio.mp3`;
     
+        canvas.scene.add(Game.drawBackground(path));
+
         const notesInfo = Note.read(ms);
     
         const notesGroup = new THREE.Group();
@@ -57,8 +94,6 @@ const Game = {
         );
     
         canvas.scene.add(notesGroup);
-
-        canvas.renderer.render(canvas.scene, canvas.camera);
 
         let startTime = 0;
 
@@ -71,8 +106,9 @@ const Game = {
         audioLoader.load(audio , function( buffer ) {
             sound.setBuffer( buffer );
             sound.setVolume( volume / 100 );
-            sound.play();
+            // sound.play();
             startTime = Date.now();
+            canvas.renderer.render(canvas.scene, canvas.camera);
             loop();
         });
 
@@ -81,7 +117,7 @@ const Game = {
     
             if (pause) {            
                 cancelAnimationFrame( animate );
-                sound.stop();
+                // sound.stop();
                 document.getElementById("game").removeChild(canvas.renderer.domElement);
             }
         
