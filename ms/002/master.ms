@@ -1,4 +1,4 @@
-[Title] Don’t Fight The Music
+[Title] Don't Fight The Music
 [Difficult] Master
 [BPM] 195
 
