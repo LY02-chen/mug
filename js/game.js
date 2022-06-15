@@ -1,6 +1,7 @@
 const Game = {
     Init: function() {
         const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x5d5d5d);
         
         const camera = new THREE.PerspectiveCamera(
             45, 16 / 9, 0.1, 10000
@@ -50,16 +51,6 @@ const Game = {
         image.position.set(trackWidth / 2, 3000, -1000)
         backgroundGroup.add(image);
         
-        const planeBackground = new THREE.Mesh(
-            new THREE.PlaneGeometry(5000, 5000), 
-            new THREE.MeshBasicMaterial({
-                color: 0x5b5b5b
-            })
-        );
-        planeBackground.rotateX(cameraDegree);
-        planeBackground.position.set(trackWidth / 2, 3001, -1001);
-        backgroundGroup.add(planeBackground);
-
         const planeShadow = new THREE.Mesh(
             new THREE.PlaneGeometry(5000, 5000), 
             new THREE.MeshBasicMaterial({

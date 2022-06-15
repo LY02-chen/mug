@@ -1,0 +1,112 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"scopeName": "source.ms",
+	"name": "ms",
+	"patterns": [
+		{
+			"match": "(\\/\\/ )([\\s\\S])*",
+			"name": "comment.ms"
+		},
+		{
+			"match": "(\\[Title\\])(([\\s\\S])*)",
+			"captures": {
+				"1": {
+					"name": "tag.title.ms"
+				},
+				"2": {
+					"name": "title.ms"
+				}
+			}
+		},
+		{
+			"match": "(\\[Difficult\\])|(Easy)|(Normal)|(Hard)|(Expert)|(Master)|(Ultimate)",
+			"captures": {
+				"1": {
+					"name": "tag.difficult.ms"
+				},
+				"2": {
+					"name": "difficult.easy.ms"
+				},
+				"3": {
+					"name": "difficult.normal.ms"
+				},
+				"4": {
+					"name": "difficult.hard.ms"
+				},
+				"5": {
+					"name": "difficult.expert.ms"
+				},
+				"6": {
+					"name": "difficult.master.ms"
+				},
+				"7": {
+					"name": "difficult.ultimate.ms"
+				}
+			}
+		},
+		{
+			"match": "(\\[BPM\\])([ 0-9]*)",
+			"captures": {
+				"1": {
+					"name": "tag.bpm.ms"
+				},
+				"2": {
+					"name": "bpm.ms"
+				}
+			}
+		},
+		{
+			"match": "(\\[Beat\\])([ 0-9.]*)",
+			"captures": {
+				"1": {
+					"name": "tag.beat.ms"
+				},
+				"2": {
+					"name": "beat.ms"
+				}
+			}
+		},
+		{
+			"match": "((\\[Start\\])|(\\[End\\]))",
+			"name": "tag.start_end.ms"
+		},
+		{
+			"match": "(\\[Note\\])*(\\[Up__\\])*(\\[Down\\])*(\\[Long\\])* (\\[True_\\])*(\\[False\\])* ([01]{8}) ([.0-9]*)( )*([.0-9]*)( )*(Front)*(Back)*",
+			"captures": {
+				"1": {
+					"name": "tag.note.ms"
+				},
+				"2": {
+					"name": "tag.up.ms"
+				},
+				"3": {
+					"name": "tag.down.ms"
+				},
+				"4": {
+					"name": "tag.long.ms"
+				},
+				"5": {
+					"name": "special.true.ms"
+				},
+				"6": {
+					"name": "special.false.ms"
+				},
+				"7": {
+					"name": "key.ms"
+				},
+				"8": {
+					"name": "beat.start.ms"
+				},
+				"10": {
+					"name": "beat.end.ms"
+				},
+				"12": {
+					"name": "long.front.ms"
+				},
+				"13": {
+					"name": "long.back.ms"
+				}
+			}
+		}
+	]
+}

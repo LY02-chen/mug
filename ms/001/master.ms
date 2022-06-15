@@ -379,8 +379,8 @@
 [Note] [False] 00110000 3.5
 [Note] [False] 00001100 3.75
 [Beat] 4
-[Long] [False] 00000011 0 0.5 Front
-[Long] [False] 00000011 0.5 1 Front
+[Long] [False] 00000011 0 0.25 Front
+[Long] [False] 00000011 0.5 0.75 Front
 [Up__] [False] 00001100 1.5
 [Up__] [False] 00000110 2.5
 [Up__] [False] 01100000 3.5
@@ -462,13 +462,18 @@
 [Down] [False] 11000000 3
 [Beat] 4
 [Long] [False] 11000000 0 2 Front
-[Long] [False] 00110000 1 3 Front
-[Long] [False] 00001100 2 4 Front
+[Long] [False] 00001100 1 3 Front
+[Long] [False] 00110000 2 4 Front
 [Long] [False] 00000011 3 5 Front
 [Beat] 4
-[Long] [False] 00110000 0 2 Front
-[Long] [False] 00001100 1 3 Front
-[Long] [False] 00000011 2 4 Front
+[Long] [False] 00001100 0 2 Front
+[Long] [False] 00110000 1 3 Front
+[Long] [False] 11000000 2 4 Front
+[Long] [False] 00001100 3 5 Front
+[Beat] 4
+[Long] [False] 00000011 0 2 Front
+[Long] [False] 00110000 1 3 Front
+[Long] [False] 00001100 2 4 Front
 [Long] [False] 11000000 3 5 Front
 [Beat] 4
 [Long] [False] 00110000 0 2 Front
@@ -476,16 +481,4 @@
 [Long] [False] 00000011 2 4 Front
 [Long] [False] 11000000 3 5 Front
 [Beat] 4
-[Long] [False] 00110000 0 2 Front
-[Long] [False] 00001100 1 3 Front
-[Long] [False] 00000011 2 4 Front
-[Long] [False] 11000000 3 5 Front
-[Beat] 4
-
-
-
-
-
-
-
 [End]

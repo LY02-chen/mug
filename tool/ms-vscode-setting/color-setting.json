@@ -1,0 +1,156 @@
+{
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope":["tag.title.ms"],
+        "settings": {
+          "foreground": "#fa6e98"
+        }
+      },
+      {
+        "scope":["title.ms"],
+        "settings": {
+          "foreground": "#a3b1ff"
+        }
+      },
+      {
+        "scope":["tag.difficult.ms"],
+        "settings": {
+          "foreground": "#b8ffce"
+        }
+      },
+      {
+        "scope":["difficult.easy.ms"],
+        "settings": {
+          "foreground": "#00ff0d"
+        }
+      },
+      {
+        "scope":["difficult.normal.ms"],
+        "settings": {
+          "foreground": "#00ffff"
+        }
+      },
+      {
+        "scope":["difficult.hard.ms"],
+        "settings": {
+          "foreground": "#ffc850"
+        }
+      },
+      {
+        "scope":["difficult.expert.ms"],
+        "settings": {
+          "foreground": "#ff3a3a"
+        }
+      },
+      {
+        "scope":["difficult.master.ms"],
+        "settings": {
+          "foreground": "#b12bff"
+        }
+      },
+      {
+        "scope":["difficult.ultimate.ms"],
+        "settings": {
+          "foreground": "#ffffff"
+        }
+      },
+      {
+        "scope":["tag.bpm.ms"],
+        "settings": {
+          "foreground": "#b66efa"
+        }
+      },
+      {
+        "scope":["bpm.ms"],
+        "settings": {
+          "foreground": "#7c6efa"
+        }
+      },
+      {
+        "scope":["tag.beat.ms"],
+        "settings": {
+          "foreground": "#ff5353"
+        }
+      },
+      {
+        "scope":["beat.ms"],
+        "settings": {
+          "foreground": "#ff9191"
+        }
+      },
+      {
+        "scope":["tag.start_end.ms"],
+        "settings": {
+          "foreground": "#ffae00"
+        }
+      },
+      {
+        "scope":["tag.note.ms"],
+        "settings": {
+          "foreground": "#8dfafa"
+        }
+      },
+      {
+        "scope":["tag.up.ms"],
+        "settings": {
+          "foreground": "#f16891"
+        }
+      },
+      {
+        "scope":["tag.down.ms"],
+        "settings": {
+          "foreground": "#758cd6"
+        }
+      },
+      {
+        "scope":["tag.long.ms"],
+        "settings": {
+          "foreground": "#00ff2a"
+        }
+      },
+      {
+        "scope":["special.true.ms"],
+        "settings": {
+          "foreground": "#faa84a"
+        }
+      },
+      {
+        "scope":["special.false.ms"],
+        "settings": {
+          "foreground": "#faa84a85"
+        }
+      },
+      {
+        "scope":["key.ms"],
+        "settings": {
+          "foreground": "#96c9a1"
+        }
+      },
+      {
+        "scope":["beat.start.ms"],
+        "settings": {
+          "foreground": "#fffd94"
+        }
+      },
+      {
+        "scope":["beat.end.ms"],
+        "settings": {
+          "foreground": "#a98aff"
+        }
+      },
+      {
+        "scope":["long.front.ms"],
+        "settings": {
+          "foreground": "#fffc31"
+        }
+      },
+      {
+        "scope":["long.back.ms"],
+        "settings": {
+          "foreground": "#4174ff"
+        }
+      }
+    ]
+  }
+}

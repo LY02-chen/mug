@@ -1,0 +1,25 @@
+{
+    "name": "musicalscore",
+    "displayName": "ms",
+    "description": "LY02",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.68.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "ms",
+            "aliases": ["ms", "ms"],
+            "extensions": [".ms"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "ms",
+            "scopeName": "source.ms",
+            "path": "./syntaxes/ms.tmLanguage.json"
+        }]
+    }
+}

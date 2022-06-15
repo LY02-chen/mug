@@ -1,0 +1,119 @@
+{
+	"New": {
+		"prefix": "new",
+		"body": [
+			"[Title] ${1:title}",
+			"[Difficult] ${2|Easy,Normal,Hard,Expert,Master,Ultimate|}",
+			"[BPM] ${3:0}\n",
+			"// [BPM] BPM",
+			"// [Beat] adjust",
+			"// [Note] [True_/False] key:00000000 ticks",
+			"// [Up__] [True_/False] key:00000000 ticks",
+			"// [Down] [True_/False] key:00000000 ticks",
+			"// [Long] [True_/False] key:00000000 ticks end Front/Back\n",
+			"[Start]",
+			"[BPM] ${4:0}",
+			"[Beat] ${5:0}",
+			"$0",
+			"[End]"
+		]
+	},
+	"Easy": {
+		"prefix": "easy",
+		"body": [
+			"Easy"
+		]
+	},
+	"Normal": {
+		"prefix": "normal",
+		"body": [
+			"Normal"
+		]
+	},
+	"Hard": {
+		"prefix": "hard",
+		"body": [
+			"Hard"
+		]
+	},
+	"Expert": {
+		"prefix": "expert",
+		"body": [
+			"Expert"
+		]
+	},
+	"Master": {
+		"prefix": "master",
+		"body": [
+			"Master"
+		]
+	},
+	"Ultimate": {
+		"prefix": "ultimate",
+		"body": [
+			"Ultimate"
+		]
+	},
+	"BPM": {
+		"prefix": "bpm",
+		"body": [
+			"[BPM] ${1:0}",
+			"$0"
+		]
+	},
+	"Beat": {
+		"prefix": "beat",
+		"body": [
+			"[Beat] ${1:0}",
+			"$0"
+		]
+	},
+	"Note": {
+		"prefix": "note",
+		"body": [
+			"[Note] [${1|False,True_|}] ${2:00000000} ${3:0}"
+		]
+	},
+	"Up": {
+		"prefix": "up",
+		"body": [
+			"[Up__] [${1|False,True_|}] ${2:00000000} ${3:0}"
+		]
+	},
+	"Down": {
+		"prefix": "down",
+		"body": [
+			"[Down] [${1|False,True_|}] ${2:00000000} ${3:0}"
+		]
+	},
+	"Long": {
+		"prefix": "long",
+		"body": [
+			"[Long] [${1|False,True_|}] ${2:00000000} ${3:0} ${4:0} ${5|Front,Back|}"
+		]
+	},
+	"True": {
+		"prefix": "true",
+		"body": [
+			"[True_]"
+		]
+	},
+	"False": {
+		"prefix": "false",
+		"body": [
+			"[False]"
+		]
+	},
+	"Front": {
+		"prefix": "front",
+		"body": [
+			"Front"
+		]
+	},
+	"Back": {
+		"prefix": "back",
+		"body": [
+			"Back"
+		]
+	}
+}
