@@ -49,6 +49,8 @@ function songSel(num) {
     );
 
     domEvent.addEventListener(plane, "click", event => {
+        if (num == songIndex) 
+            return; 
         songIndex = num;
         changeSong();
     });
