@@ -14,6 +14,14 @@ document.getElementById("game").appendChild(renderer.domElement);
 const axis = new THREE.AxesHelper(10000);
 scene.add(axis);
 
+const songPath = Array.from({length: songList.length}, (x, index) => {
+    return songList[index].path;
+});
+
+const songImage = songPath.map(path => {
+    return new THREE.TextureLoader().load(`${path}image.jpg`);
+});
+
 const show = new THREE.Mesh(
     new THREE.PlaneGeometry(canvasHeight * 1.2, canvasHeight * 1.2), 
     new THREE.MeshBasicMaterial()
@@ -143,33 +151,30 @@ function songListPlanes() {
             changeSong();
         });
         songListGroup.children[i].material[0].color = 
-            new THREE.Color(i == 0 ? 0xa000cc : 0x39293d);
+            new THREE.Color(i == 0 ? 0xff99f5 : 0x39293d);
     }
 
     changeSong();
 }
 songListPlanes();
 
+
 function changeSong() {
-    const song = songList[songIndex],
-          path = `${song.path}`;
-    
-    show.material.map = new THREE.TextureLoader().load(`${path}image.jpg`);
+    show.material.map = songImage[songIndex];
     show.material.needsUpdate = true;
 
     for (let i = 0; i <= 6; i++) {
-        const song = songList[(i % 2 ? 
+        const index = (i % 2 ? 
                 (songIndex - (i + 1) / 2 + songList.length - 2) : 
                 (songIndex + i / 2 - 1)
-              ) % (songList.length - 1) + 1],
-              path = song.path;
+              ) % (songList.length - 1) + 1;
 
         const mesh = songListGroup.children[i];
 
         mesh.material[2].map = new THREE.CanvasTexture(
-            levelCanvas[song.difficult[difficultIndex]]
+            levelCanvas[songList[index].difficult[difficultIndex]]
         );
-        mesh.material[3].map = new THREE.TextureLoader().load(`${path}image.jpg`);
+        mesh.material[3].map = songImage[index];
     }
 }
 
