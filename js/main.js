@@ -47,7 +47,7 @@ function songListPlane(width, height, y, imageSize) {
     );
 
     const imagePlane = new THREE.PlaneGeometry(imageSize, imageSize);
-    imagePlane.translate(-(width - height) / 2, 0, 0);
+    imagePlane.translate(-(width - height * 2.4) / 2, 0, 0);
     addGeometry(
         imagePlane,
         new THREE.MeshBasicMaterial()
@@ -92,11 +92,8 @@ function songListPlanes() {
 
     scene.add(songListGroup);
 
-
     for (let i = 0; i <= 6; i++) {
         domEvent.addEventListener(songListGroup.children[i], "click", event => {
-            // if (3 == songIndex) 
-            //     return; 
             songIndex = (i % 2 ? 
                 (songIndex - (i + 1) / 2 + songList.length - 2) : 
                 (songIndex + i / 2 - 1)
