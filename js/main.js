@@ -18,8 +18,8 @@ const songPath = Array.from({length: songList.length}, (x, index) => {
     return songList[index].path;
 });
 
-const songImage = songPath.map(path => {
-    return new THREE.TextureLoader().load(`${path}image.jpg`);
+const songImage = songPath.map((path, index) => {
+    return index ? new THREE.TextureLoader().load(`${path}image.jpg`) : 0;
 });
 
 const show = new THREE.Mesh(
@@ -37,21 +37,35 @@ const levelCanvas = Array.from({length: 101}, (x, index) => {
     canvas.width = canvasHeight;
     canvas.height = canvasHeight;
 
-    const textWidth = ctx.measureText(`${index + 1}`).width;
-
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = "white";
 
     ctx.font = "bold 60pt Arial";
-    ctx.fillText(`LEVEL`, (canvas.width - textWidth) / 2, canvas.height / 4);
+    ctx.fillText("LEVEL", canvas.width / 2, canvas.height / 4);
     ctx.font = "bold 100pt Arial";
-    ctx.fillText(`${index}`, (canvas.width - textWidth) / 2, canvas.height / 2);
+    ctx.fillText(`${index}`, canvas.width / 2, canvas.height / 2);
 
     return canvas;
 });
 
-document.body.appendChild(levelCanvas[1]);
+const songTitle = Array.from({length: songList.length}, (x, index) => {
+    const title = songList[index].title;
+    const canvas = document.createElement("canvas"),
+          ctx = canvas.getContext("2d");
+
+    canvas.width = canvasHeight * 3;
+    canvas.height = canvasHeight;
+
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "white";
+
+    ctx.font = "bold 120pt Arial";
+    ctx.fillText(`${title}`, 0, canvas.height / 2);
+
+
+    return canvas;
+});
 
 const songMenuList = [];
 let songIndex = 1,
@@ -100,6 +114,13 @@ function songListPlane(width, height, y, levelSize, imageSize) {
         new THREE.MeshBasicMaterial()
     );
 
+    const titlePlane = new THREE.PlaneGeometry(height * 3, height);
+    titlePlane.translate(-(width - height * 6.6) / 2, 0, 0);
+    addGeometry(
+        titlePlane,
+        new THREE.MeshBasicMaterial({transparent: true})
+    );
+
     const bufferGeometry = new THREE.Mesh(
         THREE.BufferGeometryUtils.mergeBufferGeometries(
             geometryArray, true
@@ -140,7 +161,6 @@ function songListPlanes() {
 
     scene.add(songListGroup);
 
-
     for (let i = 0; i <= 6; i++) {
         domEvent.addEventListener(songListGroup.children[i], "click", event => {
             songIndex = (i % 2 ? 
@@ -158,7 +178,6 @@ function songListPlanes() {
 }
 songListPlanes();
 
-
 function changeSong() {
     show.material.map = songImage[songIndex];
     show.material.needsUpdate = true;
@@ -175,6 +194,9 @@ function changeSong() {
             levelCanvas[songList[index].difficult[difficultIndex]]
         );
         mesh.material[3].map = songImage[index];
+        mesh.material[4].map = new THREE.CanvasTexture(
+            songTitle[index]
+        );
     }
 }
 

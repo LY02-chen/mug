@@ -12,11 +12,11 @@ function test() {
     
     const difficult = ["easy", "normal", "hard", "expert", "master", "ultimate"];
     
-    const btn = (song, difficult, div) => {
+    const btn = (song, dif, div) => {
         const btn = document.createElement("button");
         btn.onclick = () => {
             pause = false;
-            Game.gamePlay(song, difficult[difficult])
+            Game.gamePlay(song, difficult[dif])
         };
         btn.innerHTML = difficult[difficult];
         div.appendChild(btn);
