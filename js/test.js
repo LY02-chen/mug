@@ -10,15 +10,15 @@ function test() {
     btnDiv.appendChild(btnStop);
     btnDiv.appendChild(p);
     
-    const dif = ["easy", "normal", "hard", "expert", "master", "ultimate"];
+    const difficult = ["easy", "normal", "hard", "expert", "master", "ultimate"];
     
     const btn = (song, difficult, div) => {
         const btn = document.createElement("button");
         btn.onclick = () => {
             pause = false;
-            Game.gamePlay(song, dif[difficult])
+            Game.gamePlay(song, difficult[difficult])
         };
-        btn.innerHTML = dif[difficult];
+        btn.innerHTML = difficult[difficult];
         div.appendChild(btn);
     };
     
@@ -27,8 +27,8 @@ function test() {
         const p = document.createElement("p");
         p.innerHTML = songList[i].title + " : ";
         div.appendChild(p);
-        for(let j in dif)
-            if (songList[i].dif[j])
+        for(let j in difficult)
+            if (songList[i].difficult[j])
                 btn(i, j, div);            
         btnDiv.appendChild(div);
     }
