@@ -138,7 +138,7 @@ function songListPlanes() {
     const width = 0.7,
           height = 0.25,
           scale = 1.2,
-          padding = 0.05,
+          padding = 0.01,
           imageSize = 0.8,
           levelSize = 0.6;
 
