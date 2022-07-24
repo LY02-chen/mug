@@ -27,9 +27,7 @@ const path = (index) => {
 
 const songImage = Array.from({length: songList.length}, (x, index) => {
     const src = `${path(index)}image.jpg`;
-    const image = new Image();
-    image.src = src;
-    return image;
+    return new THREE.TextureLoader().load(src);
 });
 
 const songAudioFull = Array.from({length: songList.length}, (x, index) => {
@@ -40,38 +38,74 @@ const songAudioPreview = Array.from({length: songList.length}, (x, index) => {
     const src = `${path(index)}audio-preview.mp3`;
 });
 
-const songSelectCanvas = Array.from({length: songList.length}, (x, index) => {
+const selectListLevel = Array.from({length: 101}, (x, level) => {
+    const canvas = document.createElement("canvas"),
+          ctx = canvas.getContext("2d");
+    canvas.width = renderHeight;
+    canvas.height = renderHeight;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "white";
+    ctx.font = `bold ${canvas.height * 0.2}pt Arial`;
+    ctx.fillText(`${level}`, canvas.width / 2, canvas.height / 2);
+    return new THREE.MeshBasicMaterial({
+        map: new THREE.CanvasTexture(canvas),
+        transparent: true
+    });
+});
+
+const selectListTitle = Array.from({length: songList.length}, (x, index) => {
+    const canvas = document.createElement("canvas"),
+          ctx = canvas.getContext("2d");
+    canvas.width = renderHeight * 3;
+    canvas.height = renderHeight;
+    ctx.textAlign = "left";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "white";
+    ctx.font = `bold ${canvas.height * 0.14}pt Arial`;
+    ctx.fillText(`${songList[index].title}`, 0, canvas.height / 2);
+    return new THREE.MeshBasicMaterial({
+        map: new THREE.CanvasTexture(canvas),
+        transparent: true
+    });
+});
+
+const selectGeometry = Array.from({length: songList.length}, (x, index) => {
     return Array.from({length: 6}, (x, difficult) => {
-        const canvas = document.createElement("canvas"),
-              ctx = canvas.getContext("2d");
+        const geometryArray = [
+            new THREE.PlaneGeometry(selectGeometryWidth, selectGeometryHeight),
+            new THREE.CircleGeometry(selectDifficultRadius, 1024),
+            new THREE.CircleGeometry(selectDifficultRadius * 0.8, 1024),
+            new THREE.PlaneGeometry(selectLevelSize, selectLevelSize),
+            new THREE.PlaneGeometry(selectImageSize, selectImageSize),
+            new THREE.PlaneGeometry(selectTitleWidth, selectTitleHeight),
+        ];
 
-        canvas.width = selectWidth * 20;
-        canvas.height = selectHeight * 20;
+        geometryArray[1].translate(-(selectGeometryWidth - selectGeometrySize(1)) / 2, 0, 0);
+        geometryArray[2].translate(-(selectGeometryWidth - selectGeometrySize(1)) / 2, 0, 0);
+        geometryArray[3].translate(-(selectGeometryWidth - selectGeometrySize(1)) / 2, 0, 0);
+        geometryArray[4].translate(-(selectGeometryWidth - selectGeometrySize(2.7)) / 2, 0, 0);
+        geometryArray[5].translate(-(selectGeometryWidth - selectGeometrySize(6.7)) / 2, 0, 0);
     
-        ctx.fillStyle = "#39293d";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const materialArray = [
+            new THREE.MeshBasicMaterial({color: 0x39293d}),
+            new THREE.MeshBasicMaterial({color: 0xffffff}),
+            new THREE.MeshBasicMaterial({color: difficultColor[difficult]}),
+            selectListLevel[songList[index].difficult[difficult]],
+            new THREE.MeshBasicMaterial({
+                map: songImage[index],
+                transparent: true
+            }),
+            selectListTitle[index]
+        ];
 
-        function circle(color, radius) {
-            ctx.fillStyle = color;
-            ctx.beginPath();
-            ctx.arc(canvas.width * 0.1, canvas.height / 2, canvas.height * radius, 0, Math.PI * 2);
-            ctx.closePath();
-            ctx.fill();
-        }
+        const bufferGeometry = new THREE.Mesh(
+            THREE.BufferGeometryUtils.mergeBufferGeometries(
+                geometryArray, true
+            ), 
+            materialArray
+        );
 
-        circle("white", 0.4);
-        circle(difficultColor[difficult], 0.32);
-
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillStyle = "white";
-
-        ctx.font = "bold 500pt Arial";
-        ctx.fillText(`${songList[index].difficult[difficult]}`, canvas.width * 0.1, canvas.height / 2);
-
-        
-        ctx.fillText(`${songList[index].title}`, canvas.width / 2, canvas.height / 2);
-
-        return canvas;
-    })
+        return bufferGeometry;
+    });
 });

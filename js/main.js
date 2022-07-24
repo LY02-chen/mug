@@ -11,74 +11,72 @@ const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(renderWidth, renderHeight);
 document.getElementById("game").appendChild(renderer.domElement);
 
+
+
 const domEvent = new THREEx.DomEvents(camera, renderer.domElement);
     
-
-
-const le = songList.length;
-const dif = 4;
-
-const Selgeometry = new THREE.Mesh(
-    new THREE.PlaneGeometry(selectWidth, selectHeight * 8),
+const selectListFrame = new THREE.Mesh(
+    new THREE.PlaneGeometry(selectGeometryWidth, selectGeometryHeight * 8),
     new THREE.MeshBasicMaterial({color: 0xffffff})
 );
-scene.add(Selgeometry);
-Selgeometry.position.set(-renderWidth * 0.45, 0, -0.1);
+scene.add(selectListFrame);
+selectListFrame.position.set(-renderWidth * 0.4, 0, -0.1);
 
-const selectSelectGroup = new THREE.Group();
-scene.add(selectSelectGroup);
+const selectListGroup = new THREE.Group();
+scene.add(selectListGroup);
 
 
-selectSelectGroup.clear();
-for (let i = 0; i < le; i++) {
-    const geometry = new THREE.Mesh(
-        new THREE.PlaneGeometry(selectWidth, selectHeight),
-        new THREE.MeshBasicMaterial({
-            map: new THREE.CanvasTexture(
-                songSelectCanvas[i][dif]
-            )
-        })
-    );
+function selectListLoad(selectList, difficult) {
+    const selectLength = Math.ceil(11 / selectList.length) * selectList.length;
     
-    geometry.position.set(-renderWidth * 0.45, 
-        -(selectPadding + selectHeight) * (le - i < 5 ? i - le : i), 
-        0
-    );
-    selectSelectGroup.add(geometry);
-} 
+    selectListGroup.clear();
+    for (let i = 0; i < selectLength; i++) {
+        const geometry = selectGeometry[selectList[i % selectList.length]][difficult].clone();
+               
+        geometry.position.set(
+            -renderWidth * 0.4, 
+            -(selectGeometryPadding + selectGeometryHeight) * (selectLength - i < 5 ? i - selectLength : i), 
+            0.1
+        );
+        selectListGroup.add(geometry);
+    } 
+}
 
+function selectListSetting(tag, difficult, order) {
+    const selectList = [0,1,2,3,4];
 
+    selectListLoad(selectList, difficult);
+}
 
-
-
+selectListSetting("tag", 4, "order");
 
 
 let listSlideMousePos = null;
 
-domEvent.addEventListener(Selgeometry, "mousedown", event => {
+domEvent.addEventListener(selectListFrame, "mousedown", event => {
     listSlideMousePos = event.intersect.point.y;
 });
 
-domEvent.addEventListener(Selgeometry, "mouseup", event => {
+domEvent.addEventListener(selectListFrame, "mouseup", event => {
     listSlideMousePos = null;
 });
 
-domEvent.addEventListener(Selgeometry, "mouseout", event => {
+domEvent.addEventListener(selectListFrame, "mouseout", event => {
     listSlideMousePos = null;
 });
 
-domEvent.addEventListener(Selgeometry, "mousemove", event => {
+domEvent.addEventListener(selectListFrame, "mousemove", event => {
     if (listSlideMousePos) {
         const movey = event.intersect.point.y - listSlideMousePos;
 
-        const listHeight = selectSelectGroup.children.length * (selectHeight + selectPadding);
-        for (let children of selectSelectGroup.children) {
+        const selectistHeight = selectListGroup.children.length * (selectGeometryHeight + selectGeometryPadding);
+        for (let children of selectListGroup.children) {
             children.position.y += movey;
-            if (children.position.y >= (listHeight + selectPadding) / 2 + selectHeight) {
-                children.position.y -= listHeight;
+            if (children.position.y >= (selectistHeight + selectGeometryPadding) / 2 + selectGeometryHeight) {
+                children.position.y -= selectistHeight;
             }
-            else if (children.position.y <= (listHeight + selectPadding) / -2 - selectHeight) {
-                children.position.y += listHeight;
+            else if (children.position.y <= (selectistHeight + selectGeometryPadding) / -2 - selectGeometryHeight) {
+                children.position.y += selectistHeight;
             }
         }
 
