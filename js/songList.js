@@ -27,7 +27,10 @@ const path = (index) => {
 
 const songImage = Array.from({length: songList.length}, (x, index) => {
     const src = `${path(index)}image.jpg`;
-    return new THREE.TextureLoader().load(src);
+    return new THREE.MeshBasicMaterial({
+        map: new THREE.TextureLoader().load(src),
+        transparent: true
+    });
 });
 
 const songAudioFull = Array.from({length: songList.length}, (x, index) => {
@@ -70,10 +73,10 @@ const selectListTitle = Array.from({length: songList.length}, (x, index) => {
     });
 });
 
-const selectGeometry = Array.from({length: songList.length}, (x, index) => {
+const selectListGeometry = Array.from({length: songList.length}, (x, index) => {
     return Array.from({length: 6}, (x, difficult) => {
         const geometryArray = [
-            new THREE.PlaneGeometry(selectGeometryWidth, selectGeometryHeight),
+            new THREE.PlaneGeometry(selectListGeometryWidth, selectListGeometryHeight),
             new THREE.CircleGeometry(selectDifficultRadius, 1024),
             new THREE.CircleGeometry(selectDifficultRadius * 0.8, 1024),
             new THREE.PlaneGeometry(selectLevelSize, selectLevelSize),
@@ -81,31 +84,26 @@ const selectGeometry = Array.from({length: songList.length}, (x, index) => {
             new THREE.PlaneGeometry(selectTitleWidth, selectTitleHeight),
         ];
 
-        geometryArray[1].translate(-(selectGeometryWidth - selectGeometrySize(1)) / 2, 0, 0);
-        geometryArray[2].translate(-(selectGeometryWidth - selectGeometrySize(1)) / 2, 0, 0);
-        geometryArray[3].translate(-(selectGeometryWidth - selectGeometrySize(1)) / 2, 0, 0);
-        geometryArray[4].translate(-(selectGeometryWidth - selectGeometrySize(2.7)) / 2, 0, 0);
-        geometryArray[5].translate(-(selectGeometryWidth - selectGeometrySize(6.7)) / 2, 0, 0);
+        geometryArray[1].translate(-(selectListGeometryWidth - selectListGeometrySize(1)) / 2, 0, 0);
+        geometryArray[2].translate(-(selectListGeometryWidth - selectListGeometrySize(1)) / 2, 0, 0);
+        geometryArray[3].translate(-(selectListGeometryWidth - selectListGeometrySize(1)) / 2, 0, 0);
+        geometryArray[4].translate(-(selectListGeometryWidth - selectListGeometrySize(2.7)) / 2, 0, 0);
+        geometryArray[5].translate(-(selectListGeometryWidth - selectListGeometrySize(6.7)) / 2, 0, 0);
     
         const materialArray = [
             new THREE.MeshBasicMaterial({color: 0x39293d}),
             new THREE.MeshBasicMaterial({color: 0xffffff}),
             new THREE.MeshBasicMaterial({color: difficultColor[difficult]}),
             selectListLevel[songList[index].difficult[difficult]],
-            new THREE.MeshBasicMaterial({
-                map: songImage[index],
-                transparent: true
-            }),
+            songImage[index],
             selectListTitle[index]
         ];
 
-        const bufferGeometry = new THREE.Mesh(
+        return new THREE.Mesh(
             THREE.BufferGeometryUtils.mergeBufferGeometries(
                 geometryArray, true
             ), 
             materialArray
         );
-
-        return bufferGeometry;
     });
 });
