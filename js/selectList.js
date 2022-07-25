@@ -44,6 +44,65 @@ selectListFrame.position.set(selectListGeometryX, 0, 0);
 scene.add(selectListFrame);
 
     
+
+const selectSongGroup = new THREE.Group();
+scene.add(selectSongGroup);
+
+const selectSongImage = new THREE.Mesh(
+    new THREE.PlaneGeometry(selectSongImageSize, selectSongImageSize),
+    songImage[selectSongIndex]
+);
+selectSongImage.position.set(selectSongImageX, 0, 0);
+selectSongGroup.add(selectSongImage);
+
+function selectSongDifficult(difficult) {
+    const canvas = document.createElement("canvas"),
+          ctx = canvas.getContext("2d");
+    canvas.width = renderHeight;
+    canvas.height = renderHeight;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "white";
+    ctx.font = `bold ${canvas.height * 0.2}pt Arial`;
+    ctx.fillText(`${difficultText[difficult]}`, canvas.width / 2, canvas.height / 2);
+
+    const geometryArray = [
+        new THREE.CircleGeometry(selectSongDifficultRadius, 1024),
+        new THREE.CircleGeometry(selectSongDifficultRadius * 0.8, 1024),
+        new THREE.PlaneGeometry(selectSongDifficultSize, selectSongDifficultSize)
+    ];
+
+    const materialArray = [
+        new THREE.MeshBasicMaterial({color: 0xffffff}),
+        new THREE.MeshBasicMaterial({color: difficultColor[difficult]}),
+        new THREE.MeshBasicMaterial({
+            map: new THREE.CanvasTexture(canvas),
+            transparent: true
+        })
+    ];
+
+    return new THREE.Mesh(
+        THREE.BufferGeometryUtils.mergeBufferGeometries(
+            geometryArray, true
+        ), 
+        materialArray
+    );
+}
+
+for (let difficult in difficultColor) {
+    const geometry = selectSongDifficult(difficult);
+    geometry.position.set(
+        selectDifficultX + (selectSongDifficultRadius * 2 + selectSongDifficultPadding) * difficult, 
+        selectDifficultY, 0.1);
+    selectSongGroup.add(geometry);
+
+    domEvent.addEventListener(geometry, "click", event => {
+        selectListSetting(selectTag, difficult, selectOrder);
+    });
+}
+
+
+
 let selectListSlideMousePos = null;
 
 domEvent.addEventListener(selectListFrame, "mousedown", event => {
@@ -89,6 +148,7 @@ function selectListSlideStop() {
         if (children.position.y == 0) {
             const index = selectListGroup.children.indexOf(children) % selectList.length;
             selectSongIndex = selectList[index];
+            selectSongImage.material = songImage[index];
         }
     }
 }
@@ -100,62 +160,4 @@ domEvent.addEventListener(selectListFrame, "mouseup", event => {
 domEvent.addEventListener(selectListFrame, "mouseout", event => {
     selectListSlideStop();
 });
-
-
-
-const selectSongGroup = new THREE.Group();
-scene.add(selectSongGroup);
-
-const selectSongImage = new THREE.Mesh(
-    new THREE.PlaneGeometry(selectSongImageSize, selectSongImageSize),
-    new THREE.MeshBasicMaterial({color: 0x393939})
-);
-selectSongImage.position.set(selectSongImageX, 0, 0);
-selectSongGroup.add(selectSongImage);
-
-function selectSongDifficult(difficult) {
-    const canvas = document.createElement("canvas"),
-          ctx = canvas.getContext("2d");
-    canvas.width = renderHeight;
-    canvas.height = renderHeight;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillStyle = "white";
-    ctx.font = `bold ${canvas.height * 0.2}pt Arial`;
-    ctx.fillText(`${difficultText[difficult]}`, canvas.width / 2, canvas.height / 2);
-
-    const geometryArray = [
-        new THREE.CircleGeometry(selectSongDifficultRadius, 1024),
-        new THREE.CircleGeometry(selectSongDifficultRadius * 0.8, 1024),
-        new THREE.PlaneGeometry(selectSongDifficultSize, selectSongDifficultSize)
-    ];
-
-    const materialArray = [
-        new THREE.MeshBasicMaterial({color: 0xffffff}),
-        new THREE.MeshBasicMaterial({color: difficultColor[difficult]}),
-        new THREE.MeshBasicMaterial({
-            map: new THREE.CanvasTexture(canvas),
-            transparent: true
-        })
-    ];
-
-    return new THREE.Mesh(
-        THREE.BufferGeometryUtils.mergeBufferGeometries(
-            geometryArray, true
-        ), 
-        materialArray
-    );
-}
-
-for (let difficult in difficultColor) {
-    const geometry = selectSongDifficult(difficult);
-    geometry.position.set(
-        selectDifficultX + (selectSongDifficultRadius * 2 + selectSongDifficultPadding) * difficult, 
-        selectDifficultY, 0);
-    selectSongGroup.add(geometry);
-
-    domEvent.addEventListener(geometry, "click", event => {
-        selectListSetting(selectTag, difficult, selectOrder);
-    });
-}
 
