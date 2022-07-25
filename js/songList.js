@@ -84,9 +84,9 @@ const selectListGeometry = Array.from({length: songList.length}, (x, index) => {
             new THREE.PlaneGeometry(selectTitleWidth, selectTitleHeight),
         ];
 
-        geometryArray[1].translate(-(selectListGeometryWidth - selectListGeometrySize(1)) / 2, 0, 0);
-        geometryArray[2].translate(-(selectListGeometryWidth - selectListGeometrySize(1)) / 2, 0, 0);
-        geometryArray[3].translate(-(selectListGeometryWidth - selectListGeometrySize(1)) / 2, 0, 0);
+        geometryArray[1].translate(-(selectListGeometryWidth - selectListGeometrySize(1)) / 2, 0, 0.1);
+        geometryArray[2].translate(-(selectListGeometryWidth - selectListGeometrySize(1)) / 2, 0, 0.1);
+        geometryArray[3].translate(-(selectListGeometryWidth - selectListGeometrySize(1)) / 2, 0, 0.1);
         geometryArray[4].translate(-(selectListGeometryWidth - selectListGeometrySize(2.7)) / 2, 0, 0);
         geometryArray[5].translate(-(selectListGeometryWidth - selectListGeometrySize(6.7)) / 2, 0, 0);
     

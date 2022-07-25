@@ -43,7 +43,13 @@ const selectListFrame = new THREE.Mesh(
 selectListFrame.position.set(selectListGeometryX, 0, 0);
 scene.add(selectListFrame);
 
-    
+const selectListHighlight = new THREE.Mesh(
+    new THREE.PlaneGeometry(selectListGeometryWidth, selectListGeometryHeight),
+    new THREE.MeshBasicMaterial({color: 0xcc0066})
+);
+selectListHighlight.position.set(selectListGeometryX, 0, 0.1);
+scene.add(selectListHighlight);
+
 
 const selectSongGroup = new THREE.Group();
 scene.add(selectSongGroup);
@@ -111,6 +117,8 @@ domEvent.addEventListener(selectListFrame, "mousedown", event => {
 
 domEvent.addEventListener(selectListFrame, "mousemove", event => {
     if (selectListSlideMousePos) {
+        selectListHighlight.scale.y = 0.05;
+        selectListHighlight.position.z = 0.2;
         const movey = event.intersect.point.y - selectListSlideMousePos;
 
         const selectListHeight = selectListGroup.children.length * (selectListGeometryHeight + selectListGeometryPadding);
@@ -151,6 +159,8 @@ function selectListSlideStop() {
             selectSongImage.material = songImage[index];
         }
     }
+    selectListHighlight.scale.y = 1;
+    selectListHighlight.position.z = 0.1;
 }
 
 domEvent.addEventListener(selectListFrame, "mouseup", event => {
