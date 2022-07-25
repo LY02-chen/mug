@@ -20,18 +20,18 @@ function selectListLoad(selectList, difficult) {
         selectListGroup.add(geometry);
 
         domEvent.addEventListener(geometry, "click", event => {
-            console.log(songList[index].title)
+            // console.log(songList[index].title)
         });
     } 
 }
 
 function selectListSetting(tag, difficult, order) {
-    const selectList = [0,1,2,3,4];
-
+    selectList = Array.from({length: songList.length}, (x, index) => (selectSongIndex + index) % songList.length);
+    
     selectListLoad(selectList, difficult);
 }
 
-selectListSetting("tag", 4, "order");
+selectListSetting(selectTag, 4, selectOrder);
 
 const selectListFrame = new THREE.Mesh(
     new THREE.PlaneGeometry(
@@ -85,6 +85,10 @@ function selectListSlideStop() {
         }
         else if (children.position.y <= (selectListHeight + selectListGeometryPadding) / -2 - selectListGeometryHeight) {
             children.position.y += selectListHeight;
+        }
+        if (children.position.y == 0) {
+            const index = selectListGroup.children.indexOf(children) % selectList.length;
+            selectSongIndex = selectList[index];
         }
     }
 }
@@ -149,4 +153,9 @@ for (let difficult in difficultColor) {
         selectDifficultX + (selectSongDifficultRadius * 2 + selectSongDifficultPadding) * difficult, 
         selectDifficultY, 0);
     selectSongGroup.add(geometry);
+
+    domEvent.addEventListener(geometry, "click", event => {
+        selectListSetting(selectTag, difficult, selectOrder);
+    });
 }
+

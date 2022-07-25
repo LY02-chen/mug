@@ -1,4 +1,4 @@
-let renderAspect = 16 / 9,
+let renderAspect = 16 / 12,
     renderWidth = 800,
     renderHeight = renderWidth / renderAspect;
 
@@ -41,3 +41,9 @@ const difficultText = [
     "Ultimate"
 ];
 
+let selectList = [];
+
+let selectSongIndex = 0,
+    selectDifficultIndex = 0,
+    selectTag = "",
+    selectOrder = "";
