@@ -4,31 +4,47 @@ const selectListGroup = new THREE.Group();
 scene.add(selectListGroup);
 
 
-function selectListLoad(selectList, difficult) {
-    const selectLength = Math.ceil(selectListGeometryShowCount / selectList.length) * selectList.length;
+
+function selectListSetting(tag, difficult, order) {
+    selectList = songList.filter(song => song.tag.indexOf(tag) > -1);
     
+    if (order == "level-ascending") {
+        selectList.sort((a, b) => a.difficult[difficult] - b.difficult[difficult]);
+    }
+    else if (order == "level-descending") {
+        selectList.sort((a, b) => b.difficult[difficult] - a.difficult[difficult]);
+    }
+    else if (order == "name-ascending") {
+        selectList.sort();
+    }
+    else if (order == "name-descending") {
+        selectList.sort().reverse();
+    }
+
+    selectList = selectList.map(song => songList.indexOf(song));
+
+    if (selectList.indexOf(selectSongIndex) == -1) {
+        selectSongIndex = selectList[0];
+    } 
+    while (selectList.indexOf(selectSongIndex) > 0) {
+        selectList.push(selectList.shift());
+    }
+
     selectListGroup.clear();
-    for (let i = 0; i < selectLength; i++) {
+    
+    const selectListLength = Math.ceil(selectListGeometryShowCount / selectList.length) * selectList.length;
+    
+    for (let i = 0; i < selectListLength; i++) {
         const index = selectList[i % selectList.length];
         const geometry = selectListGeometry[index][difficult].clone();
                
         geometry.position.set(
             selectListGeometryX, 
-            -(selectListGeometryPadding + selectListGeometryHeight) * (selectLength - i < selectListGeometryShowCount / 2 ? i - selectLength : i), 
+            -(selectListGeometryPadding + selectListGeometryHeight) * (selectListLength - i < selectListGeometryShowCount / 2 ? i - selectListLength : i), 
             0.1
         );
         selectListGroup.add(geometry);
-
-        domEvent.addEventListener(geometry, "click", event => {
-            // console.log(songList[index].title)
-        });
-    } 
-}
-
-function selectListSetting(tag, difficult, order) {
-    selectList = Array.from({length: songList.length}, (x, index) => (selectSongIndex + index) % songList.length);
-    
-    selectListLoad(selectList, difficult);
+    }
 }
 
 selectListSetting(selectTag, 4, selectOrder);
@@ -61,6 +77,13 @@ const selectSongImage = new THREE.Mesh(
 selectSongImage.position.set(selectSongImageX, 0, 0);
 selectSongGroup.add(selectSongImage);
 
+const selectSongBackground = new THREE.Mesh(
+    new THREE.PlaneGeometry(selectSongBackgroundSize, selectSongBackgroundSize),
+    songImage[selectSongIndex]
+);
+selectSongBackground.position.set(0, selectSongBackgroundY, -10);
+selectSongGroup.add(selectSongBackground);
+
 function selectSongDifficult(difficult) {
     const canvas = document.createElement("canvas"),
           ctx = canvas.getContext("2d");
@@ -68,6 +91,7 @@ function selectSongDifficult(difficult) {
     canvas.height = renderHeight;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
+
     ctx.fillStyle = "white";
     ctx.font = `bold ${canvas.height * 0.2}pt Arial`;
     ctx.fillText(`${difficultText[difficult]}`, canvas.width / 2, canvas.height / 2);
@@ -157,6 +181,7 @@ function selectListSlideStop() {
             const index = selectListGroup.children.indexOf(children) % selectList.length;
             selectSongIndex = selectList[index];
             selectSongImage.material = songImage[selectSongIndex];
+            selectSongBackground.material = songImage[selectSongIndex];
         }
     }
     selectListHighlight.scale.y = 1;

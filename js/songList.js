@@ -1,23 +1,28 @@
 const songList = [
     {
         title: "Tempestissimo",
-        difficult: [1, 2, 3, 4, 34, 1]
+        difficult: [1, 2, 3, 4, 34, 1],
+        tag: [""]
     },
     {
         title: "Don't Fight The Music",
-        difficult: [0, 0, 0, 0, 36, 0]
+        difficult: [0, 0, 0, 0, 36, 0],
+        tag: [""]
     },
     {
         title: "the EmpErroR",
-        difficult: [0, 0, 0, 0, 36, 0]
+        difficult: [0, 0, 0, 0, 36, 0],
+        tag: [""]
     },
     {
         title: "エンドマークに希望と涙を添えて",
-        difficult: [0, 0, 0, 0, 35, 0]
+        difficult: [0, 0, 0, 0, 35, 0],
+        tag: [""]
     },
     {
         title: "マシンガンポエムドール",
-        difficult: [0, 0, 0, 0, 34, 0]
+        difficult: [0, 0, 0, 0, 34, 0],
+        tag: [""]
     }
 ];
 
@@ -27,8 +32,9 @@ const path = (index) => {
 
 const songImage = Array.from({length: songList.length}, (x, index) => {
     const src = `${path(index)}image.jpg`;
+    const texture = new THREE.TextureLoader().load(src);
     return new THREE.MeshBasicMaterial({
-        map: new THREE.TextureLoader().load(src),
+        map: texture,
         transparent: true
     });
 });
@@ -77,11 +83,11 @@ const selectListGeometry = Array.from({length: songList.length}, (x, index) => {
     return Array.from({length: 6}, (x, difficult) => {
         const geometryArray = [
             new THREE.PlaneGeometry(selectListGeometryWidth, selectListGeometryHeight),
-            new THREE.CircleGeometry(selectDifficultRadius, 1024),
-            new THREE.CircleGeometry(selectDifficultRadius * 0.8, 1024),
-            new THREE.PlaneGeometry(selectLevelSize, selectLevelSize),
-            new THREE.PlaneGeometry(selectImageSize, selectImageSize),
-            new THREE.PlaneGeometry(selectTitleWidth, selectTitleHeight),
+            new THREE.CircleGeometry(selectListDifficultRadius, 1024),
+            new THREE.CircleGeometry(selectListDifficultRadius * 0.8, 1024),
+            new THREE.PlaneGeometry(selectListLevelSize, selectListLevelSize),
+            new THREE.PlaneGeometry(selectListImageSize, selectListImageSize),
+            new THREE.PlaneGeometry(selectListTitleWidth, selectListTitleHeight),
         ];
 
         geometryArray[1].translate(-(selectListGeometryWidth - selectListGeometrySize(1)) / 2, 0, 0.1);
