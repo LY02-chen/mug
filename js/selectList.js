@@ -156,7 +156,7 @@ function selectListSlideStop() {
         if (children.position.y == 0) {
             const index = selectListGroup.children.indexOf(children) % selectList.length;
             selectSongIndex = selectList[index];
-            selectSongImage.material = songImage[index];
+            selectSongImage.material = songImage[selectSongIndex];
         }
     }
     selectListHighlight.scale.y = 1;
