@@ -84,6 +84,17 @@ const selectSongBackground = new THREE.Mesh(
 selectSongBackground.position.set(0, selectSongBackgroundY, -10);
 selectSongGroup.add(selectSongBackground);
 
+const selectSongBackgroundShadow = new THREE.Mesh(
+    new THREE.PlaneGeometry(renderWidth * 1.2, renderHeight * 1.2),
+    new THREE.MeshBasicMaterial({
+        color: 0x000000,
+        transparent: true,
+        opacity: 0.4
+    })
+);
+selectSongBackgroundShadow.position.set(0, 0, -10);
+selectSongGroup.add(selectSongBackgroundShadow);
+
 function selectSongDifficult(difficult) {
     const canvas = document.createElement("canvas"),
           ctx = canvas.getContext("2d");
